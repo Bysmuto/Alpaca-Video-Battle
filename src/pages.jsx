@@ -26,7 +26,7 @@ export function StartPage({}) {
         <>
           <img
             style={{ width: "500px" }}
-            src="/src/assets/logo.gif"
+            src="./assets/logo.gif"
             alt="logo"
           />{" "}
           <br />
