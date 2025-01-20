@@ -1,0 +1,32 @@
+/* CSS Reset */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Alpacas';
+  src: url('../assets/Alpacas Video Battle font.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Alpacas','Brush Script MT', cursive;;
+    
+  }
+  
+  html, body {
+    height: 100%;
+    width: 100%;
+  }
+  
+  body {
+    background-color: black;
+    color:white
+  }
