@@ -26,7 +26,7 @@ export function StartPage({}) {
         <>
           <img
             style={{ width: "500px" }}
-            src="./assets/logo.gif"
+            src="./logo.gif"
             alt="logo"
           />{" "}
           <br />
@@ -34,7 +34,7 @@ export function StartPage({}) {
             className="bg-main text-white p-4 "
             onClick={() => setStarted(true)}
           >
-            start
+            testantdo gh pages
           </button>
         </>
       ) : (
