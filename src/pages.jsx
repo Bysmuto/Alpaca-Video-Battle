@@ -17,6 +17,9 @@ import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
 
 import { statesContext } from "./main.jsx";
 
+import logo from "../public/logo.gif";
+import button from "../public/button1.png";
+
 export function StartPage({}) {
   const [started, setStarted] = useState(false);
 
@@ -24,17 +27,15 @@ export function StartPage({}) {
     <>
       {!started ? (
         <>
-          <img
-            style={{ width: "500px" }}
-            src="logo.gif"
-            alt="logo"
-          />{" "}
-          <br />
+        
+          <img style={{ width: "500px" }} src={logo} alt="logo" /> <br />
           <button
-            className="bg-main text-white p-4 "
+            style={{ backgroundImage: `url(${button})` }}
+            className="bg-cover bg-center
+             text-white p-4 "
             onClick={() => setStarted(true)}
           >
-            testantdo gh pages 2
+            start
           </button>
         </>
       ) : (

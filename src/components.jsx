@@ -177,7 +177,12 @@ export function VideoPlaylist({ video, videoKey }) {
       >
         {video.title}
       </a>
-      <button  className="bg-main text-white p-4 " onClick={() => removeVideo(videoKey)}>remove</button>
+      <button
+        className="bg-main text-white p-4 "
+        onClick={() => removeVideo(videoKey)}
+      >
+        remove
+      </button>
       <br />
       <br />
     </div>
