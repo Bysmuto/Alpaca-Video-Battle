@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <statesContext.Provider value={[states, setStates]}>
-        <GameModesPage />
+        <StartPage />
       </statesContext.Provider>
     </>
   );
