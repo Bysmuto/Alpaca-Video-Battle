@@ -9,9 +9,11 @@ import {
   VideoTitle,
   Round,
   Timer,
-  Vote,
   AddVideo,
   VideoPlaylist,
+  Button,
+  VideoCard,
+  Playlist,
 } from "./components.jsx/";
 import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
 
@@ -27,16 +29,8 @@ export function StartPage({}) {
     <>
       {!started ? (
         <>
-        
           <img style={{ width: "500px" }} src={logo} alt="logo" /> <br />
-          <button
-            style={{ backgroundImage: `url(${button})` }}
-            className="bg-cover bg-center
-             text-white p-4 "
-            onClick={() => setStarted(true)}
-          >
-            start
-          </button>
+          <Button name="start" func={() => setStarted(true)} img={button} />
         </>
       ) : (
         <PlaylistsPage />
@@ -81,17 +75,12 @@ export function PlaylistsPage({}) {
             <>
               <h1>playlists:</h1>
               {playlists.map((playlist, index) => (
-                <button
-                  style={{
-                    padding: "1rem",
-                    color: "white",
-                    backgroundColor: "#1db954",
-                  }}
+                <Button
                   key={index}
-                  onClick={() => selectPlaylist(playlist.videos, playlist.name)}
-                >
-                  {playlist.name}
-                </button>
+                  name={playlist.name}
+                  func={() => selectPlaylist(playlist.videos, playlist.name)}
+                  img={button}
+                />
               ))}
             </>
           )}
@@ -106,32 +95,16 @@ export function PlaylistsPage({}) {
 export function PlaylistPage({}) {
   const [playing, setPlaying] = useState(false);
   const [states, setStates] = useContext(statesContext);
-  console.log(states.databasePlayList);
 
   return (
     <>
       {!playing ? (
-        <>
-          <button
-            className="bg-main text-white p-4 "
-            onClick={() => setPlaying(true)}
-          >
-            play
-          </button>
-
+        <div className=" flex flex-col  items-center space-y-6">
           <AddVideo />
+          <Playlist />
 
-          <h2>
-            {states.databasePlayListName}:
-            {Object.values(states.databasePlayList).length}
-          </h2>
-
-          {Object.entries(states.databasePlayList)
-            .reverse()
-            .map(([key, video], index) => {
-              return <VideoPlaylist key={index} video={video} videoKey={key} />;
-            })}
-        </>
+          <Button name="play" func={() => setPlaying(true)} img={button} />
+        </div>
       ) : (
         <GameModesPage />
       )}
@@ -151,31 +124,26 @@ export function GameModesPage({}) {
   return (
     <>
       {!selected ? (
-        <>
-          <h1>GAME MODE</h1>
+        <div className=" bg-purple-500 h-[100vh]">
+          <div className="flex flex-col w-[40vw]">
+          <h1 className="text-center">GAME MODE</h1>
+          <div className="bg-slate-500 flex x justify-center space-x-5">
+            <Button name="Hell" func={() => selectMode("Hell")} img={button} />
+            <Button
+              name="Normal"
+              func={() => selectMode("Normal")}
+              img={button}
+            />
+            <Button
+              name="Quick"
+              func={() => selectMode("Quick")}
+              img={button}
+            />
+          </div>
 
-          <button
-            style={{
-              padding: "1rem",
-              color: "white",
-              backgroundColor: "#1db954",
-            }}
-            onClick={() => selectMode("Hell")}
-          >
-            Hell
-          </button>
-          <button
-            style={{
-              padding: "1rem",
-              color: "white",
-              backgroundColor: "#1db954",
-            }}
-            onClick={() => selectMode("Normal")}
-          >
-            Normal
-          </button>
-          <button onClick={() => selectMode("Quick")}>Quick</button>
-        </>
+          </div>
+         
+        </div>
       ) : (
         <GamePage />
       )}
@@ -230,6 +198,12 @@ export function GamePage({}) {
 
     console.log(videoIndex1, videoId1, videoTitle1);
 
+    function vote(videoToRemove) {
+      setCurrentPlaylist((prevItens) =>
+        prevItens.filter((vids) => vids !== videoToRemove)
+      );
+    }
+
     return (
       <>
         <Timer
@@ -243,23 +217,17 @@ export function GamePage({}) {
           maxRound={currentPlaylist.length}
         />
 
-        <Vote
-          videoToRemove={videoIndex2}
-          funcToChangeState={setCurrentPlaylist}
+        <VideoCard
+          videoId={videoId1}
+          videoTitle={videoTitle1}
+          vote={() => vote(videoIndex2)}
         />
 
-        <Video videoId={videoId1} />
-        <VideoTitle videoTitle={videoTitle1} />
-
-        <br />
-        <br />
-
-        <Vote
-          videoToRemove={videoIndex1}
-          funcToChangeState={setCurrentPlaylist}
+        <VideoCard
+          videoId={videoId2}
+          videoTitle={videoTitle2}
+          vote={() => vote(videoIndex1)}
         />
-        <Video videoId={videoId2} />
-        <VideoTitle videoTitle={videoTitle2} />
       </>
     );
   }
@@ -286,7 +254,8 @@ export function WinnerPage({ videoId, videoTitle }) {
           <h1>And the winner is </h1>
           <Video videoId={videoId} />
           <VideoTitle videoTitle={videoTitle} />
-          <button onClick={() => location.reload()}>restart</button>
+
+          <Button name="Reset" func={() => location.reload()} img={button} />
         </>
       ) : (
         <GamePage />
