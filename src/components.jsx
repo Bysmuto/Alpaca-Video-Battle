@@ -1081,10 +1081,11 @@ export function Button({ name, func, img, extra }) {
 
   return (
     <button
-      // style={{ backgroundImage: `url(${img})` }}
-      className={`relative px-8 py-4 bg-main text-white text-lg border-b-4 border-l-4 border-green-900 shadow-inner active:border-t-4 active:border-r-4 active:border-green-900 active:border-gray-200 active:translate-y-[2px] ${
+      
+      className={`relative bg-cover bg-center  bg-no-repeat px-8 py-4 bg-main text-white text-lg border-b-4 border-l-4 border-green-900 shadow-inner active:border-t-4 active:border-r-4 active:border-green-900 active:border-gray-200 active:translate-y-[2px] ${
         isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
       } ${extra || ""}`}
+      style={{ backgroundImage: `url(${img})` }}
       onClick={handleClick}
       disabled={isButtonDisabled}
     >

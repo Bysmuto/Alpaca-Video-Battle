@@ -7,6 +7,7 @@ import {
 import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
 import { statesContext } from "./main.jsx";
 import logo from "../public/logo.gif";
+import button from "../public/button1.png";
 import {
   Video,
   VideoTitle,
@@ -1065,7 +1066,9 @@ export function StartPage({}) {
         <div className="flex items-center justify-center h-[100vh]">
           <div className="flex flex-col items-center w-[80vw]">
             <img className="w-[60vw]" src={logo} alt="logo" /> <br />
-            <Button name="start" func={() => setStarted(true)} />
+            <Button name="start" func={() => setStarted(true)} 
+            // img={button}
+             />
           </div>
         </div>
       ) : (
