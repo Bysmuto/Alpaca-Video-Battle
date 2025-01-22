@@ -1151,7 +1151,7 @@ export function VideoCard({ videoId, videoTitle, vote }) {
   return (
     <div className="  space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4 ">
       <VideoFrame videoTitle={videoTitle} videoId={videoId} />
-      <Button name="vote" func={vote} img={button} extra={"w-full"} />
+      <Button name="vote" func={vote} extra={"w-full"} />
     </div>
   );
 }
