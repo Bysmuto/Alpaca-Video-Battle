@@ -52,7 +52,7 @@ export async function removeItemFromDatabase(playlistName, itemKey) {
   }
 }
 
-// removeItemFromDatabase('Best Gaming Playlist','chave')
+
 
 export async function addItemToDatabase(playlistName, itemData) {
   try {
@@ -68,5 +68,18 @@ export async function addItemToDatabase(playlistName, itemData) {
   }
 }
 
-// addItemToDatabase('Best Gaming Playlist',{title:'test title',videoId:'AN ID'})
 
+
+export async function addPlaylistToDatabase(playlistName) {
+  try {
+    // Reference to the playlist
+    const playlistRef = ref(database, `/playLists/`);
+
+    // Push the new item to the playlist
+    const newItemRef = await push(playlistRef, playlistName);
+
+    console.log(`Item added to playlist "${playlistName}" with key: ${newItemRef.key}`);
+  } catch (error) {
+    console.log("Error adding item:", error);
+  }
+}

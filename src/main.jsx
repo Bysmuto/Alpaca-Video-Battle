@@ -24,9 +24,9 @@ function App() {
     <>
       <statesContext.Provider value={[states, setStates]}>
         {/* <GamePage /> */}
-        {/* <StartPage/> */}
+        <StartPage/>
         {/* <WinnerPage videoTitle={'sometitle'} videoId={'EX_mpk_08iw'}/> */}
-        <PlaylistsPage/>
+        {/* <PlaylistsPage/> */}
       </statesContext.Provider>
     </>
   );

@@ -1065,7 +1065,7 @@ export function StartPage({}) {
         <div className="flex items-center justify-center h-[100vh]">
           <div className="flex flex-col items-center w-[80vw]">
             <img className="w-[60vw]" src={logo} alt="logo" /> <br />
-            <Button name="start" func={() => setStarted(true)}  />
+            <Button name="start" func={() => setStarted(true)} />
           </div>
         </div>
       ) : (
@@ -1111,7 +1111,7 @@ export function PlaylistsPage({}) {
           ) : (
             <div className="flex items-center justify-center h-[100vh]">
               <div className="flex flex-col space-y-5 items-center w-[80vw]">
-                <PlaylistsFrame playLists={playlists} func={selectPlaylist}/>
+                <PlaylistsFrame playLists={playlists} func={selectPlaylist} />
               </div>
             </div>
           )}
@@ -1158,21 +1158,9 @@ export function GameModesPage({}) {
           <div className="flex flex-col w-[40vw]">
             <h1 className="text-center m-20">GAME MODE</h1>
             <div className=" flex x justify-center space-x-5">
-              <Button
-                name="Hell"
-                func={() => selectMode("Hell")}
-                
-              />
-              <Button
-                name="Normal"
-                func={() => selectMode("Normal")}
-            
-              />
-              <Button
-                name="Quick"
-                func={() => selectMode("Quick")}
-           
-              />
+              <Button name="Hell" func={() => selectMode("Hell")} />
+              <Button name="Normal" func={() => selectMode("Normal")} />
+              <Button name="Quick" func={() => selectMode("Quick")} />
             </div>
           </div>
         </div>
@@ -1192,11 +1180,11 @@ export function GamePage({}) {
     let limitTime;
 
     if (gameMode === "Normal") {
-      (playList = sliceList(list, 0.5)), (limitTime = 90);
+      (playList = sliceList(list, 0.7)), (limitTime = 90);
     }
 
     if (gameMode === "Quick") {
-      (playList = sliceList(list, 0.1)), (limitTime = 20);
+      (playList = sliceList(list, 0.3)), (limitTime = 30);
     }
 
     if (gameMode === "Hell") {
@@ -1240,7 +1228,9 @@ export function GamePage({}) {
 
     return (
       <div className="flex flex-col items-center justify-center  ">
-        <div className="w-full flex justify-end">
+        <div className="w-full flex justify-between p-3">
+          {" "}
+          <img className="w-[8%] p-1" src={logo} alt="logo" onClick={()=>location.reload()} />
           <Timer
             seconds={limitTime}
             videoIdsToRemove={[videoIndex1, videoIndex2]}

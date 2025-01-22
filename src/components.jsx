@@ -10,8 +10,10 @@ import {
 import { statesContext } from "./main.jsx";
 import {
   fetchPlaylist,
+  fetchPlaylists,
   removeItemFromDatabase,
   addItemToDatabase,
+  addPlaylistToDatabase,
 } from "./database.js";
 
 import logo from "../public/logo.gif";
@@ -1080,7 +1082,7 @@ export function Button({ name, func, img, extra }) {
   return (
     <button
       // style={{ backgroundImage: `url(${img})` }}
-      className={`text-white p-4  rounded-sm bg-main ${
+      className={`relative px-8 py-4 bg-main text-white text-lg border-b-4 border-l-4 border-green-900 shadow-inner active:border-t-4 active:border-r-4 active:border-green-900 active:border-gray-200 active:translate-y-[2px] ${
         isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
       } ${extra || ""}`}
       onClick={handleClick}
@@ -1274,7 +1276,10 @@ export function PlaylistInfo({}) {
   return (
     <div className="text-main">
       {states.databasePlayListName} -{" "}
-      {Object.values(states.databasePlayList).length} videos
+      {states.databasePlayList
+        ? Object.values(states.databasePlayList).length
+        : 0}{" "}
+      videos
     </div>
   );
 }
@@ -1305,14 +1310,15 @@ export function Playlist({}) {
           </div>
 
           <div className=" h-[70vh]  p-4 overflow-auto  ">
-            {Object.entries(states.databasePlayList)
-
-              .reverse()
-              .map(([key, video], index) => {
-                return (
+            {states.databasePlayList ? (
+              Object.entries(states.databasePlayList)
+                .reverse()
+                .map(([key, video], index) => (
                   <VideoPlaylist key={index} video={video} videoKey={key} />
-                );
-              })}
+                ))
+            ) : (
+              <p>No videos available.</p>
+            )}
           </div>
         </div>
       </div>
@@ -1320,6 +1326,8 @@ export function Playlist({}) {
   );
 }
 
+
+//playlistS
 export function PlaylistsFrame({ playLists, func }) {
   return (
     <div>
@@ -1339,8 +1347,7 @@ export function PlaylistsFrame({ playLists, func }) {
         {/* Video Section */}
         <div className="bg-black border-b-4 border-green-500 h-[70vh]   w-[80vw] flex flex-col p-4 ">
           <div className="flex justify-center ">
-            {" "}
-            add playlist coming soon...
+            <AddPlaylist />
           </div>
 
           <div className=" h-[70vh]  p-4 overflow-auto flex flex-col items-center space-y-6  ">
@@ -1355,6 +1362,42 @@ export function PlaylistsFrame({ playLists, func }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+export function AddPlaylist({}) {
+  const [states, setStates] = useContext(statesContext);
+  const [inputValue, setInputValue] = useState("");
+
+  const handleClick = async (playlistName) => {
+    try {
+      setInputValue("");
+
+      addPlaylistToDatabase({ name: playlistName, videos: "" });
+
+      const res = await fetchPlaylists();
+      location.reload()
+    } catch (error) {
+      console.error("Error handling click:", error);
+    }
+  };
+
+  return (
+    <div className=" w-[100%] flex items-center justify-center m-4">
+      <input
+        className="text-main p-4 w-[100%] rounded-sm "
+        type="text"
+        onChange={(event) => {
+          setInputValue(event.target.value);
+        }}
+        placeholder="Name of the new playlist "
+        value={inputValue}
+      />
+      <Button
+        name="add"
+        func={() => handleClick(inputValue)}
+        extra={"p-2 text-main"}
+      />
     </div>
   );
 }
