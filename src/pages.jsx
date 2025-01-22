@@ -4,6 +4,9 @@ import {
   fetchPlaylist,
   removeItemFromDatabase,
 } from "./database.js";
+import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
+import { statesContext } from "./main.jsx";
+import logo from "../public/logo.gif";
 import {
   Video,
   VideoTitle,
@@ -14,13 +17,9 @@ import {
   Button,
   VideoCard,
   Playlist,
+  VideoFrame,
+  PlaylistsFrame,
 } from "./components.jsx/";
-import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
-
-import { statesContext } from "./main.jsx";
-
-import logo from "../public/logo.gif";
-import button from "../public/button1.png";
 
 const list = [
   {
@@ -1065,10 +1064,9 @@ export function StartPage({}) {
       {!started ? (
         <div className="flex items-center justify-center h-[100vh]">
           <div className="flex flex-col items-center w-[80vw]">
-          <img className="w-[60vw]" src={logo} alt="logo" /> <br />
-          <Button name="start" func={() => setStarted(true)} img={button} />
+            <img className="w-[60vw]" src={logo} alt="logo" /> <br />
+            <Button name="start" func={() => setStarted(true)}  />
           </div>
-         
         </div>
       ) : (
         <PlaylistsPage />
@@ -1105,22 +1103,17 @@ export function PlaylistsPage({}) {
       {!selected ? (
         <>
           {playlists.length === 0 ? (
-            <>
-              <h1>playlists:</h1>
-              <h1>Loading...</h1>
-            </>
+            <div className="flex items-center justify-center h-[100vh]">
+              <div className="flex flex-col space-y-5 items-center w-[80vw]">
+                <h1>Loading...</h1>
+              </div>
+            </div>
           ) : (
-            <>
-              <h1>playlists:</h1>
-              {playlists.map((playlist, index) => (
-                <Button
-                  key={index}
-                  name={playlist.name}
-                  func={() => selectPlaylist(playlist.videos, playlist.name)}
-                  img={button}
-                />
-              ))}
-            </>
+            <div className="flex items-center justify-center h-[100vh]">
+              <div className="flex flex-col space-y-5 items-center w-[80vw]">
+                <PlaylistsFrame playLists={playlists} func={selectPlaylist}/>
+              </div>
+            </div>
           )}
         </>
       ) : (
@@ -1138,10 +1131,9 @@ export function PlaylistPage({}) {
     <>
       {!playing ? (
         <div className=" flex flex-col  items-center space-y-6">
-          <AddVideo />
           <Playlist />
 
-          <Button name="play" func={() => setPlaying(true)} img={button} />
+          <Button name="play" func={() => setPlaying(true)} />
         </div>
       ) : (
         <GameModesPage />
@@ -1169,17 +1161,17 @@ export function GameModesPage({}) {
               <Button
                 name="Hell"
                 func={() => selectMode("Hell")}
-                img={button}
+                
               />
               <Button
                 name="Normal"
                 func={() => selectMode("Normal")}
-                img={button}
+            
               />
               <Button
                 name="Quick"
                 func={() => selectMode("Quick")}
-                img={button}
+           
               />
             </div>
           </div>
@@ -1193,6 +1185,7 @@ export function GameModesPage({}) {
 
 export function GamePage({}) {
   const [states, setStates] = useContext(statesContext);
+  console.log(states.gameMode);
 
   function gameConfig(gameMode, list) {
     let playList;
@@ -1246,19 +1239,22 @@ export function GamePage({}) {
     }
 
     return (
-      <div className="flex flex-col items-center justify-center h-[100vh] ">
-        <Timer
-          seconds={limitTime}
-          videoIdsToRemove={[videoIndex1, videoIndex2]}
-          funcToChangeState={setCurrentPlaylist}
-        />
+      <div className="flex flex-col items-center justify-center  ">
+        <div className="w-full flex justify-end">
+          <Timer
+            seconds={limitTime}
+            videoIdsToRemove={[videoIndex1, videoIndex2]}
+            funcToChangeState={setCurrentPlaylist}
+          />
+        </div>
+        <div className="m-4 w-full flex justify-center">
+          <Round
+            stateChange={currentPlaylist}
+            maxRound={currentPlaylist.length}
+          />
+        </div>
 
-        <Round
-          stateChange={currentPlaylist}
-          maxRound={currentPlaylist.length}
-        />
-
-        <div class="grid grid-cols-2 gap-4">
+        <div class="grid grid-cols-2 gap-4 mt-10 ">
           <VideoCard
             videoId={videoId1}
             videoTitle={videoTitle1}
@@ -1270,7 +1266,6 @@ export function GamePage({}) {
             videoTitle={videoTitle2}
             vote={() => vote(videoIndex1)}
           />
-          
         </div>
       </div>
     );
@@ -1291,16 +1286,20 @@ export function GamePage({}) {
 export function WinnerPage({ videoId, videoTitle }) {
   const [restart, setRestart] = useState(false);
   const [states, setStates] = useContext(statesContext);
+
   return (
     <>
       {!restart ? (
-        <>
-          <h1>And the winner is </h1>
-          <Video videoId={videoId} />
-          <VideoTitle videoTitle={videoTitle} />
+        <div className="flex justify-center h-[100vh]">
+          <div className="flex flex-col items-center space-y-8 justify-center w-[80%] p-6">
+            <h1 className="text-2xl ">And the winner is ...</h1>
+            <div className="w-full h-full">
+              <VideoFrame videoTitle={videoTitle} videoId={videoId} />
+            </div>
 
-          <Button name="Reset" func={() => location.reload()} img={button} />
-        </>
+            <Button name="Reset" func={() => location.reload()} />
+          </div>
+        </div>
       ) : (
         <GamePage />
       )}

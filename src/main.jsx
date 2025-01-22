@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
-import { StartPage,PlaylistsPage,GamePage,GameModesPage } from "./pages.jsx";
+import { StartPage,PlaylistsPage,PlaylistPage,GamePage,GameModesPage, WinnerPage } from "./pages.jsx";
 
 import "./css/main.css";
 
@@ -23,7 +23,10 @@ function App() {
   return (
     <>
       <statesContext.Provider value={[states, setStates]}>
-        <StartPage />
+        {/* <GamePage /> */}
+        {/* <StartPage/> */}
+        {/* <WinnerPage videoTitle={'sometitle'} videoId={'EX_mpk_08iw'}/> */}
+        <PlaylistsPage/>
       </statesContext.Provider>
     </>
   );
