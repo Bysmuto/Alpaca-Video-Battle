@@ -1116,7 +1116,7 @@ export function Round({ stateChange, maxRound }) {
 
 export function Timer({ seconds, videoIdsToRemove, funcToChangeState }) {
   const [timeLeft, setTimeLeft] = useState(seconds);
-  console.log(seconds);
+  // console.log(seconds);
 
   function removeRandomVideo() {
     const IdToRemove = getRandomIndex(-1, videoIdsToRemove);

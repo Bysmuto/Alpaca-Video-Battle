@@ -4,7 +4,7 @@ import {
   fetchPlaylist,
   removeItemFromDatabase,
 } from "./database.js";
-import { getRandomIndex, sliceList, changeState } from "./utilityFuncs.js";
+import { getRandomIndex, sliceList, changeState,shuffleArray } from "./utilityFuncs.js";
 import { statesContext } from "./main.jsx";
 import logo from "../public/logo.gif";
 import button from "../public/button1.png";
@@ -1175,39 +1175,49 @@ export function GameModesPage({}) {
   );
 }
 
+function gameConfig(gameMode, list) {
+  let playList;
+  let limitTime;
+
+  if (gameMode === "Normal") {
+    (playList = sliceList(list, 0.7)), (limitTime = 90);
+  }
+
+  if (gameMode === "Quick") {
+    (playList = sliceList(list, 0.3)), (limitTime = 30);
+  }
+
+  if (gameMode === "Hell") {
+    (playList = sliceList(list, 1)), (limitTime = 300);
+  }
+
+  return { playList, limitTime };
+}
+
 export function GamePage({}) {
   const [states, setStates] = useContext(statesContext);
-  console.log(states.gameMode);
 
-  function gameConfig(gameMode, list) {
-    let playList;
-    let limitTime;
+  // console.log(states.gameMode);
 
-    if (gameMode === "Normal") {
-      (playList = sliceList(list, 0.7)), (limitTime = 90);
-    }
+  // useEffect(() => {
+  //   console.log("Updated Playlist :", currentPlaylist);
+  // }, [currentPlaylist]);
 
-    if (gameMode === "Quick") {
-      (playList = sliceList(list, 0.3)), (limitTime = 30);
-    }
-
-    if (gameMode === "Hell") {
-      (playList = sliceList(list, 1)), (limitTime = 300);
-    }
-
-    return { playList, limitTime };
+  function vote(videoToRemove) {
+    setCurrentPlaylist((prevItens) =>
+      prevItens.filter((vids) => vids !== videoToRemove)
+    );
   }
+
+
   const { playList, limitTime } = gameConfig(
     states.gameMode,
     Object.values(states.databasePlayList)
   );
 
-  const [currentPlaylist, setCurrentPlaylist] = useState(playList);
-  // const [currentPlaylist, setCurrentPlaylist] = useState(list);
-
-  useEffect(() => {
-    console.log("Updated Playlist :", currentPlaylist);
-  }, [currentPlaylist]);
+  // const [currentPlaylist, setCurrentPlaylist] = useState(playList);
+  const [currentPlaylist, setCurrentPlaylist] = useState(list);
+//  shuffleArray(list)
 
   if (currentPlaylist.length >= 2) {
     let index1 = getRandomIndex(-1, currentPlaylist);
@@ -1222,14 +1232,9 @@ export function GamePage({}) {
     let videoTitle1 = currentPlaylist[index1].title;
     let videoTitle2 = currentPlaylist[index2].title;
 
-    console.log(videoIndex1, videoId1, videoTitle1);
+    // console.log(videoIndex1, videoId1, videoTitle1);
 
-    function vote(videoToRemove) {
-      setCurrentPlaylist((prevItens) =>
-        prevItens.filter((vids) => vids !== videoToRemove)
-      );
-    }
-
+   
     return (
       <div className="flex flex-col items-center justify-center  ">
         <div className="w-full flex justify-between p-3">
@@ -1248,7 +1253,7 @@ export function GamePage({}) {
           />
         </div>
 
-        <div class="grid grid-cols-2 gap-4 mt-10 ">
+        <div className="grid grid-cols-2 gap-4 mt-10 ">
           <VideoCard
             videoId={videoId1}
             videoTitle={videoTitle1}
@@ -1265,7 +1270,12 @@ export function GamePage({}) {
     );
   }
 
-  if (currentPlaylist.length === 1) {
+
+
+
+
+  const winner =currentPlaylist.length === 1
+  if (winner) {
     return (
       <>
         <WinnerPage

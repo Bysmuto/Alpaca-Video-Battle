@@ -48,3 +48,22 @@ export function changeState(func, stateUpdates) {
     ...stateUpdates,
   }));
 }
+
+
+//---
+
+export function shuffleArray(array) {
+  // Create a copy to avoid modifying original array
+  const shuffledArray = [...array];
+
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    // Generate random index from 0 to i
+    const j = Math.floor(Math.random() * (i + 1));
+
+    // Swap elements
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+
+  return shuffledArray;
+}
+
