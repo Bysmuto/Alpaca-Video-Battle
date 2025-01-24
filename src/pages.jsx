@@ -19,7 +19,7 @@ import {
   VideoCard,
   Playlist,
   VideoFrame,
-  PlaylistsFrame,
+  PlaylistsFrame,OldTvEffect
 } from "./components.jsx/";
 
 const list = [
@@ -1066,6 +1066,7 @@ export function StartPage({}) {
         <div className="flex items-center justify-center h-[100vh]">
           <div className="flex flex-col items-center w-[80vw]">
             <img className="w-[60vw]" src={logo} alt="logo" /> <br />
+            <OldTvEffect/>
             <Button name="start" func={() => setStarted(true)} 
             // img={button}
              />

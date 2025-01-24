@@ -19,6 +19,7 @@ import {
 import logo from "../public/logo.gif";
 import button from "../public/button1.png";
 import videoFrame from "../public/video frame.png";
+import texture from "../public/texture.gif";
 
 const list = [
   {
@@ -1105,9 +1106,9 @@ export function Round({ stateChange, maxRound }) {
 
   return (
     <div className="text-5xl ">
-      Round <span className="text-main text-5xl">{round}</span>/
+      Round <span className="text-main text-5xl">{round}</span> 
       <span className="text-white text-opacity-50 text-4xl">
-        {initialMaxRound.current}
+       of {initialMaxRound.current}
       </span>
     </div>
   );
@@ -1402,3 +1403,14 @@ export function AddPlaylist({}) {
     </div>
   );
 }
+
+
+export function OldTvEffect ()  {
+
+  return (
+    // <div className="fixed top-0 left-0 w-screen h-screen bg-black z-50 overflow-hidden">
+    //   <img src={texture} className="absolute inset-0 w-full h-full opacity-5 animate-noise" alt="Static Noise" />
+    // </div>
+    null
+  );
+};
