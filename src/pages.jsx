@@ -4,7 +4,13 @@ import {
   fetchPlaylist,
   removeItemFromDatabase,
 } from "./database.js";
-import { getRandomIndex, sliceList, changeState,shuffleArray } from "./utilityFuncs.js";
+import {
+  getRandomIndex,
+  sliceList,
+  changeState,
+  shuffleArray,
+  getRandomIndices,probability
+} from "./utilityFuncs.js";
 import { statesContext } from "./main.jsx";
 import logo from "../public/logo.gif";
 import button from "../public/button1.png";
@@ -19,7 +25,8 @@ import {
   VideoCard,
   Playlist,
   VideoFrame,
-  PlaylistsFrame,OldTvEffect
+  PlaylistsFrame,
+  OldTvEffect,
 } from "./components.jsx/";
 
 const list = [
@@ -1057,6 +1064,9 @@ const list = [
   },
 ];
 
+
+let list2=shuffleArray(list).slice(0, 5)
+
 export function StartPage({}) {
   const [started, setStarted] = useState(false);
 
@@ -1066,10 +1076,12 @@ export function StartPage({}) {
         <div className="flex items-center justify-center h-[100vh]">
           <div className="flex flex-col items-center w-[80vw]">
             <img className="w-[60vw]" src={logo} alt="logo" /> <br />
-            <OldTvEffect/>
-            <Button name="start" func={() => setStarted(true)} 
-            // img={button}
-             />
+            <OldTvEffect />
+            <Button
+              name="start"
+              func={() => setStarted(true)}
+              // img={button}
+            />
           </div>
         </div>
       ) : (
@@ -1209,40 +1221,42 @@ export function GamePage({}) {
     );
   }
 
-
   const { playList, limitTime } = gameConfig(
     states.gameMode,
     Object.values(states.databasePlayList)
   );
 
+
   // const [currentPlaylist, setCurrentPlaylist] = useState(playList);
-  const [currentPlaylist, setCurrentPlaylist] = useState(list);
-//  shuffleArray(list)
+  const [currentPlaylist, setCurrentPlaylist] = useState(list2);
+  //  
 
   if (currentPlaylist.length >= 2) {
-    let index1 = getRandomIndex(-1, currentPlaylist);
-    let index2 = getRandomIndex(index1, currentPlaylist);
 
-    let videoIndex1 = currentPlaylist[index1];
-    let videoIndex2 = currentPlaylist[index2];
+    let numberOfVideos = 3 //probability([2,0.5], [[3,4,], 0.5])
 
-    let videoId1 = currentPlaylist[index1].videoId;
-    let videoId2 = currentPlaylist[index2].videoId;
+    if(currentPlaylist.length === 2) {
+      numberOfVideos = 2
+    }
 
-    let videoTitle1 = currentPlaylist[index1].title;
-    let videoTitle2 = currentPlaylist[index2].title;
+    let Indices = getRandomIndices(numberOfVideos, currentPlaylist);
+    console.log(Indices);
 
-    // console.log(videoIndex1, videoId1, videoTitle1);
 
-   
+
     return (
       <div className="flex flex-col items-center justify-center  ">
         <div className="w-full flex justify-between p-3">
           {" "}
-          <img className="w-[8%] p-1" src={logo} alt="logo" onClick={()=>location.reload()} />
+          <img
+            className="w-[8%] p-1"
+            src={logo}
+            alt="logo"
+            onClick={() => location.reload()}
+          />
           <Timer
             seconds={limitTime}
-            videoIdsToRemove={[videoIndex1, videoIndex2]}
+            videoIdsToRemove={Indices}
             funcToChangeState={setCurrentPlaylist}
           />
         </div>
@@ -1254,27 +1268,19 @@ export function GamePage({}) {
         </div>
 
         <div className="grid grid-cols-2 gap-4 mt-10 ">
-          <VideoCard
-            videoId={videoId1}
-            videoTitle={videoTitle1}
-            vote={() => vote(videoIndex2)}
-          />
-
-          <VideoCard
-            videoId={videoId2}
-            videoTitle={videoTitle2}
-            vote={() => vote(videoIndex1)}
-          />
+          {Indices.map((i) => (
+            <VideoCard
+              videoId={currentPlaylist[i].videoId}
+              videoTitle={currentPlaylist[i].title}
+              vote={() => vote(currentPlaylist[i])}
+            />
+          ))}
         </div>
       </div>
     );
   }
 
-
-
-
-
-  const winner =currentPlaylist.length === 1
+  const winner = currentPlaylist.length === 1;
   if (winner) {
     return (
       <>

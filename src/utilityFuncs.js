@@ -49,6 +49,16 @@ export function changeState(func, stateUpdates) {
   }));
 }
 
+export function getRandomIndices(count, list, excludeIndices = []) {
+  const indices = [];
+  while (indices.length < count) {
+    const randomIndex = Math.floor(Math.random() * list.length);
+    if (!indices.includes(randomIndex) && !excludeIndices.includes(randomIndex)) {
+      indices.push(randomIndex);
+    }
+  }
+  return indices;
+}
 
 //---
 
@@ -67,3 +77,30 @@ export function shuffleArray(array) {
   return shuffledArray;
 }
 
+export function probability(...weightedValues) {
+  // Calculate the total weight
+  const totalWeight = weightedValues.reduce(
+    (sum, [_, weight]) => sum + weight,
+    0
+  );
+
+  // Normalize weights to make the total sum equal to 1
+  weightedValues = weightedValues.map(([value, weight]) => [
+    value,
+    weight / totalWeight,
+  ]);
+
+  // Generate a random number between 0 and 1
+  const random = Math.random();
+
+  // Find the value corresponding to the random number
+  let cumulativeWeight = 0;
+  for (const [value, weight] of weightedValues) {
+    cumulativeWeight += weight;
+    if (random < cumulativeWeight) {
+      return Array.isArray(value)
+        ? value[Math.floor(Math.random() * value.length)]
+        : value;
+    }
+  }
+}
