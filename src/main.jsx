@@ -1,24 +1,29 @@
 import { createContext, useState, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 
-import { StartPage,PlaylistsPage,PlaylistPage,GamePage,GameModesPage, WinnerPage } from "./pages.jsx";
+import {
+  StartPage,
+  PlaylistsPage,
+  PlaylistPage,
+  GamePage,
+  GameModesPage,
+  WinnerPage,
+} from "./pages.jsx";
 
 import "./css/main.css";
-
 
 export const statesContext = createContext();
 
 function App() {
   const [states, setStates] = useState({
     databasePlayList: {},
-    databasePlayListName: '',
+    databasePlayListName: "",
     gameMode: "",
+    timeLimit: 3000,
+    videosDisplayed: 2,
+    playlistMaxNumber: 3,
   });
 
-  // useEffect(() => {
-  //   console.log("states changed:");
-  //   console.log(states);
-  // }, [states]);
 
   return (
     <>

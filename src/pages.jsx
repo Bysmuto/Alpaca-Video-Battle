@@ -9,11 +9,12 @@ import {
   sliceList,
   changeState,
   shuffleArray,
-  getRandomIndices,probability
+  getRandomIndices,
+  probability,
 } from "./utilityFuncs.js";
 import { statesContext } from "./main.jsx";
 import logo from "../public/logo.gif";
-import button from "../public/button1.png";
+
 import {
   Video,
   VideoTitle,
@@ -1064,9 +1065,6 @@ const list = [
   },
 ];
 
-
-let list2=shuffleArray(list).slice(0, 5)
-
 export function StartPage({}) {
   const [started, setStarted] = useState(false);
 
@@ -1187,33 +1185,11 @@ export function GameModesPage({}) {
   );
 }
 
-function gameConfig(gameMode, list) {
-  let playList;
-  let limitTime;
-
-  if (gameMode === "Normal") {
-    (playList = sliceList(list, 0.7)), (limitTime = 90);
-  }
-
-  if (gameMode === "Quick") {
-    (playList = sliceList(list, 0.3)), (limitTime = 30);
-  }
-
-  if (gameMode === "Hell") {
-    (playList = sliceList(list, 1)), (limitTime = 300);
-  }
-
-  return { playList, limitTime };
-}
-
 export function GamePage({}) {
   const [states, setStates] = useContext(statesContext);
-
-  // console.log(states.gameMode);
-
-  // useEffect(() => {
-  //   console.log("Updated Playlist :", currentPlaylist);
-  // }, [currentPlaylist]);
+  const [currentPlaylist, setCurrentPlaylist] = useState(
+    list.slice(0, states.playlistMaxNumber)
+  );
 
   function vote(videoToRemove) {
     setCurrentPlaylist((prevItens) =>
@@ -1221,28 +1197,16 @@ export function GamePage({}) {
     );
   }
 
-  const { playList, limitTime } = gameConfig(
-    states.gameMode,
-    Object.values(states.databasePlayList)
-  );
 
-
-  // const [currentPlaylist, setCurrentPlaylist] = useState(playList);
-  const [currentPlaylist, setCurrentPlaylist] = useState(list2);
-  //  
 
   if (currentPlaylist.length >= 2) {
+    let Indices = getRandomIndices(states.videosDisplayed, currentPlaylist);
 
-    let numberOfVideos = 3 //probability([2,0.5], [[3,4,], 0.5])
+    function videosToremove(videoTokeep) {
+      let remove = Indices.filter((video) => video != videoTokeep);
 
-    if(currentPlaylist.length === 2) {
-      numberOfVideos = 2
+      console.log(remove);
     }
-
-    let Indices = getRandomIndices(numberOfVideos, currentPlaylist);
-    console.log(Indices);
-
-
 
     return (
       <div className="flex flex-col items-center justify-center  ">
@@ -1255,7 +1219,7 @@ export function GamePage({}) {
             onClick={() => location.reload()}
           />
           <Timer
-            seconds={limitTime}
+            seconds={states.timeLimit}
             videoIdsToRemove={Indices}
             funcToChangeState={setCurrentPlaylist}
           />
@@ -1270,9 +1234,10 @@ export function GamePage({}) {
         <div className="grid grid-cols-2 gap-4 mt-10 ">
           {Indices.map((i) => (
             <VideoCard
+              key={i}
               videoId={currentPlaylist[i].videoId}
-              videoTitle={currentPlaylist[i].title}
-              vote={() => vote(currentPlaylist[i])}
+              videoTitle={i + "-" + currentPlaylist[i].title}
+              vote={() => videosToremove(i)}
             />
           ))}
         </div>
@@ -1280,8 +1245,7 @@ export function GamePage({}) {
     );
   }
 
-  const winner = currentPlaylist.length === 1;
-  if (winner) {
+  if (currentPlaylist.length === 1) {
     return (
       <>
         <WinnerPage
