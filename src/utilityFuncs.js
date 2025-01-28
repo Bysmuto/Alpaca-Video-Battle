@@ -104,3 +104,21 @@ export function probability(...weightedValues) {
     }
   }
 }
+
+
+export function ensureEvenLength(arr) {
+  if (arr.length % 2 !== 0) {
+    arr.pop(); // Remove the last element
+  }
+  return arr;
+}
+
+export  function  separateIntoPairs(arr) {
+  arr = ensureEvenLength(arr);
+  let pairs = [];
+  for (let i = 0; i < arr.length; i += 2) {
+    let pair = arr.slice(i, i + 2);
+    pairs.push(pair);
+  }
+  return pairs;
+}

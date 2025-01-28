@@ -16,10 +16,6 @@ import {
   addPlaylistToDatabase,
 } from "./database.js";
 
-import logo from "../public/logo.gif";
-import button from "../public/button1.png";
-import videoFrame from "../public/video frame.png";
-import texture from "../public/texture.gif";
 
 const list = [
   {
@@ -1151,13 +1147,13 @@ export function Timer({ seconds, videoIdsToRemove, funcToChangeState }) {
 export function VideoCard({ videoId, videoTitle, vote }) {
   return (
     <div className="  space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4 ">
-      <VideoFrame videoTitle={videoTitle} videoId={videoId} />
+      <YoutubeFrame videoTitle={videoTitle} videoId={videoId} />
       <Button name="vote" func={vote} extra={"w-full"} />
     </div>
   );
 }
 
-export function VideoFrame({ videoTitle, videoId }) {
+export function YoutubeFrame({ videoTitle, videoId }) {
   return (
     <div className="flex flex-col w-full h-full border-4 border-main bg-white">
       {/* Title Bar */}
@@ -1209,11 +1205,14 @@ export function AddVideo({}) {
       const title = await getVideoTitle(videoId);
 
       setInputValue("");
-
       addItemToDatabase(playlistName, { title: title, videoId: videoId });
 
       const res = await fetchPlaylist(playlistName);
       changeState(setStates, { databasePlayList: res.playList.videos });
+
+
+
+
     } catch (error) {
       console.error("Error handling click:", error);
     }
@@ -1405,12 +1404,3 @@ export function AddPlaylist({}) {
 }
 
 
-export function OldTvEffect ()  {
-
-  return (
-    // <div className="fixed top-0 left-0 w-screen h-screen bg-black z-50 overflow-hidden">
-    //   <img src={texture} className="absolute inset-0 w-full h-full opacity-5 animate-noise" alt="Static Noise" />
-    // </div>
-    null
-  );
-};
