@@ -1,33 +1,77 @@
-import { useContext, useState,} from "react";
+import { useContext, useEffect, useState } from "react";
 import { statesContext } from "../main.jsx";
 import { Button } from "../components.jsx";
-import {GameTournament} from "./GamePage.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function GameModesPage({}) {
-  const [selected, setSelected] = useState(false);
-  const [states, setStates] = useContext(statesContext);
+  const navigate = useNavigate();
+
+  const [states, setStates, changePage] = useContext(statesContext);
 
   function selectMode(mode) {
+    if (mode === "normal") {
+      setStates((prevState) => ({
+        ...prevState,
+        gameMode: "GameTournament",
+        playlistMaxNumber: 128,
+        timeLimit: 90,
+      }));
+      changePage("GameTournament");
+    }
 
-    setSelected(true);
+    if (mode === "quick") {
+      setStates((prevState) => ({
+        ...prevState,
+        gameMode: "GameOneVsAll",
+        playlistMaxNumber: 50,
+        timeLimit: 30,
+      }));
+      changePage("GameOneVsAll");
+    }
+
+    if (mode === "hell") {
+      setStates((prevState) => ({
+        ...prevState,
+        gameMode: "GameFreeForAll",
+        playlistMaxNumber: 500,
+        timeLimit: 300,
+      }));
+      changePage("GameFreeForAll");
+    }
+
+    if (mode === "custom") {
+      changePage("CustomGamePage");
+    }
+
+ 
   }
 
   return (
     <>
-      {!selected ? (
-        <div className=" h-[100vh] flex items-center justify-center">
-          <div className="flex flex-col w-[40vw]">
-            <h1 className="text-center m-20">GAME MODE</h1>
-            <div className=" flex x justify-center space-x-5">
-              <Button name="Hell" func={() => setSelected(true)} />
-              <Button name="Normal" func={() => setSelected(true)} />
-              <Button name="Quick" func={() => setSelected(true)} />
-            </div>
+      <div className=" h-[100vh] flex items-center justify-center">
+        <div className="flex flex-col w-[40vw]  justify-center items-center  gap-8">
+          <h1 className="text-center text-4xl m-10">GAME MODE</h1>
+          <div className=" flex justify-center items-center space-x-5">
+            <Button
+              name="full"
+              func={() => selectMode("hell")}
+              extra={"bg-orange-500"}
+            />
+            <Button name="normal" func={() => selectMode("normal")} />
+            <Button
+              name="quick"
+              func={() => selectMode("quick")}
+              extra={"bg-blue-400"}
+            />
           </div>
+
+          <Button
+            name="Custom"
+            func={() => selectMode("custom")}
+            extra={"text-main bg-white w-[50%] "}
+          />
         </div>
-      ) : (
-        <GameTournament timeLimit={2000} playlistMaxNumber={2} />
-      )}
+      </div>
     </>
   );
 }

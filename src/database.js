@@ -56,7 +56,7 @@ export async function removeItemFromDatabase(playlistName, itemKey) {
 
 export async function addItemToDatabase(playlistName, itemData) {
   try {
-    // Reference to the playlist
+    console.log(playlistName, itemData);
     const playlistRef = ref(database, `/playLists/${playlistName}/videos`);
 
     // Push the new item to the playlist

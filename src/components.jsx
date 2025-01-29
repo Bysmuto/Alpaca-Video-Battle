@@ -16,7 +16,6 @@ import {
   addPlaylistToDatabase,
 } from "./database.js";
 
-
 const list = [
   {
     title:
@@ -1078,11 +1077,9 @@ export function Button({ name, func, img, extra }) {
 
   return (
     <button
-      
-      className={`relative bg-cover bg-center  bg-no-repeat px-8 py-4 bg-main text-white text-lg border-b-4 border-l-4 border-green-900 shadow-inner active:border-t-4 active:border-r-4 active:border-green-900 active:border-gray-200 active:translate-y-[2px] ${
+      className={`relative bg-cover bg-center  bg-no-repeat px-8 py-4 bg-main  text-lg border-b-4 border-l-4 border-green-900 shadow-inner active:border-t-4 active:border-r-4 active:border-green-900 active:border-gray-200 active:translate-y-[2px] ${
         isButtonDisabled ? "opacity-50 cursor-not-allowed" : ""
       } ${extra || ""}`}
-      // style={{ backgroundImage: `url(${img})` }}
       onClick={handleClick}
       disabled={isButtonDisabled}
     >
@@ -1102,22 +1099,25 @@ export function Round({ stateChange, maxRound }) {
 
   return (
     <div className="text-5xl ">
-      Round <span className="text-main text-5xl">{round}</span> 
+      Round <span className="text-main text-5xl">{round}</span>
       <span className="text-white text-opacity-50 text-4xl">
-       of {initialMaxRound.current}
+        of {initialMaxRound.current}
       </span>
     </div>
   );
 }
 
-export function Timer({ seconds, videoIdsToRemove, funcToChangeState }) {
+export function Timer({ seconds, videoIdsToRemove, funcToVote }) {
+  const [states, setStates] = useContext(statesContext);
   const [timeLeft, setTimeLeft] = useState(seconds);
-  // console.log(seconds);
 
-  function removeRandomVideo() {
-    const IdToRemove = getRandomIndex(-1, videoIdsToRemove);
-    removeItemFromState(videoIdsToRemove[IdToRemove], funcToChangeState);
-  }
+  
+    let removeRandomVideo = () => {
+      const IdToRemove = getRandomIndex(-1, videoIdsToRemove);
+      console.log(IdToRemove);
+      funcToVote(IdToRemove);
+    }
+ 
 
   useEffect(() => {
     setTimeLeft(seconds);
@@ -1125,8 +1125,13 @@ export function Timer({ seconds, videoIdsToRemove, funcToChangeState }) {
 
   useEffect(() => {
     if (timeLeft <= 0) {
-      removeRandomVideo();
-      return;
+      if (states.gameMode === "GameTournament") {
+        removeRandomVideo();
+        return;
+      } else {
+        funcToVote();
+        return;
+      }
     }
 
     const timerId = setInterval(() => {
@@ -1198,21 +1203,17 @@ export function AddVideo({}) {
   const [states, setStates] = useContext(statesContext);
   const [inputValue, setInputValue] = useState("");
 
-  const handleClick = async (playlistName, video) => {
+  const handleClick = async (playlistId, video) => {
     const videoId = getVideoId(video);
 
     try {
       const title = await getVideoTitle(videoId);
 
       setInputValue("");
-      addItemToDatabase(playlistName, { title: title, videoId: videoId });
+      addItemToDatabase(playlistId, { title: title, videoId: videoId });
 
-      const res = await fetchPlaylist(playlistName);
+      const res = await fetchPlaylist(playlistId);
       changeState(setStates, { databasePlayList: res.playList.videos });
-
-
-
-
     } catch (error) {
       console.error("Error handling click:", error);
     }
@@ -1231,8 +1232,8 @@ export function AddVideo({}) {
       />
       <Button
         name="add"
-        func={() => handleClick(states.databasePlayListName, inputValue)}
-        extra={"p-2 text-main"}
+        func={() => handleClick(states.databasePlayListId, inputValue)}
+        extra={"p-2 "}
       />
     </div>
   );
@@ -1242,8 +1243,8 @@ export function VideoPlaylist({ video, videoKey }) {
   const [states, setStates] = useContext(statesContext);
 
   function removeVideo(videoId) {
-    removeItemFromDatabase(states.databasePlayListName, videoId);
-    fetchPlaylist(states.databasePlayListName).then((res) => {
+    removeItemFromDatabase(states.databasePlayListId, videoId);
+    fetchPlaylist(states.databasePlayListId).then((res) => {
       changeState(setStates, { databasePlayList: res.playList.videos });
     });
     console.log("video removed" + videoId);
@@ -1327,7 +1328,6 @@ export function Playlist({}) {
   );
 }
 
-
 //playlistS
 export function PlaylistsFrame({ playLists, func }) {
   return (
@@ -1352,11 +1352,13 @@ export function PlaylistsFrame({ playLists, func }) {
           </div>
 
           <div className=" h-[70vh]  p-4 overflow-auto flex flex-col items-center space-y-6  ">
-            {playLists.map((playlist, index) => (
+            {playLists.map((playlist) => (
               <Button
-                key={index}
-                name={playlist.name}
-                func={() => func(playlist.videos, playlist.name)}
+                key={playlist[0]}
+                name={playlist[1].name}
+                func={() =>
+                  func(playlist[1].videos, playlist[1].name, playlist[0])
+                }
                 extra={"w-[80%] text-4xl]"}
               />
             ))}
@@ -1377,7 +1379,7 @@ export function AddPlaylist({}) {
       addPlaylistToDatabase({ name: playlistName, videos: "" });
 
       const res = await fetchPlaylists();
-      location.reload()
+      location.reload();
     } catch (error) {
       console.error("Error handling click:", error);
     }
@@ -1394,13 +1396,7 @@ export function AddPlaylist({}) {
         placeholder="Name of the new playlist "
         value={inputValue}
       />
-      <Button
-        name="add"
-        func={() => handleClick(inputValue)}
-        extra={"p-2 text-main"}
-      />
+      <Button name="add" func={() => handleClick(inputValue)} extra={"p-2"} />
     </div>
   );
 }
-
-

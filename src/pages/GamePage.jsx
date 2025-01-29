@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { shuffleArray, separateIntoPairs } from "../utilityFuncs.js";
+import { shuffleArray, separateIntoPairs,getRandomIndex } from "../utilityFuncs.js";
 import { statesContext } from "../main.jsx";
 import { Round, Timer, VideoCard } from "../components.jsx/";
 import { WinnerPage } from "../pages.jsx";
@@ -359,13 +359,12 @@ const list = [
   },
 ];
 
-export function GameTournament({timeLimit,playlistMaxNumber}) {
+export function GameTournament({}) {
   const [states, setStates] = useContext(statesContext);
 
-  const startPlaylist = states.databasePlayList;
-  console.log(startPlaylist);
+  const startPlaylist = Object.values(states.databasePlayList);
   const shuffled = shuffleArray(startPlaylist);
-  const sliced = shuffled.slice(0, playlistMaxNumber);
+  const sliced = shuffled.slice(0, states.playlistMaxNumber);
   const paired = separateIntoPairs(sliced);
   const finalPlaylist = paired;
 
@@ -398,8 +397,9 @@ export function GameTournament({timeLimit,playlistMaxNumber}) {
       <div className="flex flex-col items-center justify-center  ">
         <div className="w-full flex justify-between p-3">
           <Timer
-            seconds={timeLimit}
-            funcToChangeState={setCurrentPlaylist}
+            seconds={states.timeLimit}
+            videoIdsToRemove={currentPlaylist[0]}
+            funcToVote={(id) => vote(id)}
           />
         </div>
         <div className="m-4 w-full flex justify-center">
@@ -424,5 +424,150 @@ export function GameTournament({timeLimit,playlistMaxNumber}) {
   if (winner) {
     console.log(winner);
     return <WinnerPage videoId={winner.videoId} videoTitle={winner.title} />;
+  }
+}
+
+export function GameOneVsAll({}) {
+  const [states, setStates] = useContext(statesContext);
+
+  const startPlaylist =list //Object.values(states.databasePlayList);
+  const shuffled = shuffleArray(startPlaylist);
+  const sliced = shuffled.slice(0, states.playlistMaxNumber);
+  const finalPlaylist = sliced;
+
+  const [currentPlaylist, setCurrentPlaylist] = useState(finalPlaylist);
+
+  function vote(videoToRemove) {
+    setCurrentPlaylist((prevItens) =>
+      prevItens.filter((vids) => vids !== videoToRemove)
+    );
+  }
+
+  if (currentPlaylist.length > 1) {
+
+    let index1 = 0;
+    let index2 = 1;
+
+    let videoIndex1 = currentPlaylist[index1];
+    let videoIndex2 = currentPlaylist[index2];
+
+    let videoId1 = currentPlaylist[index1].videoId;
+    let videoId2 = currentPlaylist[index2].videoId;
+
+    let videoTitle1 = currentPlaylist[index1].title;
+    let videoTitle2 = currentPlaylist[index2].title;
+
+    return (
+      <div className="flex flex-col items-center justify-center  ">
+        <div className="w-full flex justify-between p-3">
+        <Timer
+            seconds={states.timeLimit}
+            videoIdsToRemove={[index1,index2]}
+            funcToVote={() => vote(videoIndex2)}
+          />
+        </div>
+        <div className="m-4 w-full flex justify-center">
+          <Round
+            stateChange={currentPlaylist}
+            maxRound={currentPlaylist.length}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4 mt-10 ">
+          <VideoCard
+            videoId={videoId1}
+            videoTitle={videoTitle1}
+            vote={() => vote(videoIndex2)}
+          />
+
+          <VideoCard
+            videoId={videoId2}
+            videoTitle={videoTitle2}
+            vote={() => vote(videoIndex1)}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (currentPlaylist.length === 1) {
+    console.log(currentPlaylist);
+    return (
+      <WinnerPage
+        videoId={currentPlaylist[0].videoId}
+        videoTitle={currentPlaylist[0].title}
+      />
+    );
+  }
+}
+
+export function GameFreeForAll({}) {
+  const [states, setStates] = useContext(statesContext);
+
+  const startPlaylist =list //Object.values(states.databasePlayList);
+  const shuffled = shuffleArray(startPlaylist);
+  const sliced = shuffled.slice(0, states.playlistMaxNumber);
+  const finalPlaylist = sliced;
+
+  const [currentPlaylist, setCurrentPlaylist] = useState(finalPlaylist);
+
+  function vote(videoToRemove) {
+    setCurrentPlaylist((prevItens) =>
+      prevItens.filter((vids) => vids !== videoToRemove)
+    );
+  }
+
+  if (currentPlaylist.length >= 2) {
+    let index1 = getRandomIndex(-1, currentPlaylist);
+    let index2 = getRandomIndex(index1, currentPlaylist);
+
+    let videoIndex1 = currentPlaylist[index1];
+    let videoIndex2 = currentPlaylist[index2];
+
+    let videoId1 = currentPlaylist[index1].videoId;
+    let videoId2 = currentPlaylist[index2].videoId;
+
+    let videoTitle1 = currentPlaylist[index1].title;
+    let videoTitle2 = currentPlaylist[index2].title;
+
+    return (
+      <div className="flex flex-col items-center justify-center  ">
+        <div className="w-full flex justify-between p-3">
+           <Timer
+            seconds={states.timeLimit}
+            videoIdsToRemove={[index1,index2]}
+            funcToVote={() => vote(videoIndex2)}
+          />
+        </div>
+        <div className="m-4 w-full flex justify-center">
+          <Round
+            stateChange={currentPlaylist}
+            maxRound={currentPlaylist.length}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4 mt-10 ">
+          <VideoCard
+            videoId={videoId1}
+            videoTitle={videoTitle1}
+            vote={() => vote(videoIndex2)}
+          />
+
+          <VideoCard
+            videoId={videoId2}
+            videoTitle={videoTitle2}
+            vote={() => vote(videoIndex1)}
+          />
+        </div>
+      </div>
+    );
+  }
+
+  if (currentPlaylist.length === 1) {
+    console.log(currentPlaylist);
+    return (
+      <WinnerPage
+        videoId={currentPlaylist[0].videoId}
+        videoTitle={currentPlaylist[0].title}
+      />
+    );
   }
 }

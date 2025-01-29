@@ -7,80 +7,77 @@
   </head>
   <body>
     <script>
-
       //1 vs ALL (0,1) , free for all (getRandomIndex()) ,tournament(pairs)
 
       //multiplayer Have players vote anonymously, then reveal the results once everyone’s cast their vote.
 
-      let playlist = [];
-
-      let timeLimit = 0;
-
-      let numberOfVideosDisplayed = (percentage) => probability([2,1-percentage], [[3, 4], percentage]);
-
-      let skip = (percentage) => probability([true, percentage], [false, 1-percentage]);
-
-      let secretVideo = 0;
-
-      
-
-      testProbabilities(() => skip(0.1), 180);
 
 
+      // let playlist = [];
+
+      // let timeLimit = 0;
+
+      // let numberOfVideosDisplayed = (percentage) =>
+      //   probability([2, 1 - percentage], [[3, 4], percentage]);
+
+      // let skip = (percentage) =>
+      //   probability([true, percentage], [false, 1 - percentage]);
+
+      // let secretVideo = 0;
+
+      // testProbabilities(() => skip(0.1), 180);
+
+      // function probability(...weightedValues) {
+      //   // Calculate the total weight
+      //   const totalWeight = weightedValues.reduce(
+      //     (sum, [_, weight]) => sum + weight,
+      //     0
+      //   );
+
+      //   // Normalize weights to make the total sum equal to 1
+      //   weightedValues = weightedValues.map(([value, weight]) => [
+      //     value,
+      //     weight / totalWeight,
+      //   ]);
+
+      //   // Generate a random number between 0 and 1
+      //   const random = Math.random();
+
+      //   // Find the value corresponding to the random number
+      //   let cumulativeWeight = 0;
+      //   for (const [value, weight] of weightedValues) {
+      //     cumulativeWeight += weight;
+      //     if (random < cumulativeWeight) {
+      //       return Array.isArray(value)
+      //         ? value[Math.floor(Math.random() * value.length)]
+      //         : value;
+      //     }
+      //   }
+      // }
+
+      // function count(array) {
+      //   return array.reduce((total, value) => {
+      //     total[value] = (total[value] || 0) + 1;
+      //     return total;
+      //   }, {});
+      // }
+
+      // function loopFor(code, times) {
+      //   for (let i = 0; i < times; i++) {
+      //     code();
+      //   }
+      // }
+
+      // function testProbabilities(item, times) {
+      //   let list = [];
+      //   loopFor(() => {
+      //     list.push(item());
+      //   }, times);
+      //   console.log(count(list));
+      // }
 
 
-      function probability(...weightedValues) {
-        // Calculate the total weight
-        const totalWeight = weightedValues.reduce(
-          (sum, [_, weight]) => sum + weight,
-          0
-        );
 
-        // Normalize weights to make the total sum equal to 1
-        weightedValues = weightedValues.map(([value, weight]) => [
-          value,
-          weight / totalWeight,
-        ]);
-
-        // Generate a random number between 0 and 1
-        const random = Math.random();
-
-        // Find the value corresponding to the random number
-        let cumulativeWeight = 0;
-        for (const [value, weight] of weightedValues) {
-          cumulativeWeight += weight;
-          if (random < cumulativeWeight) {
-            return Array.isArray(value)
-              ? value[Math.floor(Math.random() * value.length)]
-              : value;
-          }
-        }
-      }
-
-      function count(array) {
-        return array.reduce((total, value) => {
-          total[value] = (total[value] || 0) + 1;
-          return total;
-        }, {});
-      }
-
-      function loopFor(code, times) {
-        for (let i = 0; i < times; i++) {
-          code();
-        }
-      }
-     
-      function testProbabilities(item, times) {
-        let list = [];
-        loopFor(() => {
-          list.push(item());
-        }, times);
-        console.log(count(list));
-      }
-      
-      
-     
-      
     </script>
   </body>
 </html>

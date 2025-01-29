@@ -113,12 +113,23 @@ export function ensureEvenLength(arr) {
   return arr;
 }
 
-export  function  separateIntoPairs(arr) {
-  arr = ensureEvenLength(arr);
+export function separateIntoPairs(arr) {
+  arr = trimToPowerOfTwo(arr);
+
   let pairs = [];
   for (let i = 0; i < arr.length; i += 2) {
-    let pair = arr.slice(i, i + 2);
-    pairs.push(pair);
+    pairs.push(arr.slice(i, i + 2));
   }
   return pairs;
+}
+
+function trimToPowerOfTwo(arr) {
+  let n = arr.length;
+  let power = 1;
+
+  while (power * 2 <= n) {
+    power *= 2;
+  }
+
+  return arr.slice(0, power); // Trim array to the closest lesser power of two
 }

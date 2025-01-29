@@ -1,5 +1,7 @@
 import { createContext, useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createRoot } from "react-dom/client";
+import { useNavigate } from "react-router-dom";
 
 import {
   StartPage,
@@ -10,13 +12,16 @@ import {
 
 import "./css/main.css";
 
-
-import {GameTournament} from "./pages/GamePage.jsx";
+import {
+  GameTournament,
+  GameOneVsAll,
+  GameFreeForAll,
+} from "./pages/GamePage.jsx";
 import GameModesPage from "./pages/GameModesPage.jsx";
-
+import CustomGamePage from "./pages/CustomGamePage.jsx";
 
 export const statesContext = createContext();
- 
+
 export const list = [
   {
     title:
@@ -1052,30 +1057,57 @@ export const list = [
   },
 ];
 
-
 function App() {
+  const navigate = useNavigate();
   const [states, setStates] = useState({
+    currentPage: "CustomGamePage",
+
     databasePlayList: {},
     databasePlayListName: "",
     databasePlayListId: "",
-    gameMode: "",
+
+    gameMode: "GameTournament",
+    timeLimit: 90,
+    playlistMaxNumber: 50,
   });
 
+  useEffect(() => {
+    console.log(states);
+    if (states.currentPage === "start") navigate("/");
+    if (states.currentPage === "PlaylistsPage") navigate("/PlaylistsPage");
+    if (states.currentPage === "PlaylistPage") navigate("/PlaylistPage");
+    if (states.currentPage === "GameModesPage") navigate("/GameModesPage");
+    if (states.currentPage === "CustomGamePage") navigate("/CustomGamePage");
 
-// useEffect(() => {console.log(states)}, [states]);
+    if (states.currentPage === "GameTournament") navigate("/GameTournament");
+    if (states.currentPage === "GameOneVsAll") navigate("/GameOneVsAll");
+    if (states.currentPage === "GameFreeForAll") navigate("/GameFreeForAll");
+
+  }, [states.currentPage, navigate]); 
 
 
+  function changePage(page) {
+    setStates((prev) => ({ ...prev, currentPage: page }))
+  }
 
   return (
-    <>
-      <statesContext.Provider value={[states, setStates]}>
-        {/* <GameTournament /> */}
-        <StartPage/>
-        {/* <WinnerPage videoTitle={'sometitle'} videoId={'EX_mpk_08iw'}/> */}
-        {/* <PlaylistsPage/> */}
-      </statesContext.Provider>
-    </>
+    <statesContext.Provider value={[states, setStates,changePage]}>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/PlaylistsPage" element={<PlaylistsPage />} />
+        <Route path="/PlaylistPage" element={<PlaylistPage />} />
+        <Route path="/GameModesPage" element={<GameModesPage />} />
+        <Route path="/CustomGamePage" element={<CustomGamePage />} />
+        <Route path="/GameTournament" element={<GameTournament />} />
+        <Route path="/GameOneVsAll" element={<GameOneVsAll />} />
+        <Route path="/GameFreeForAll" element={<GameFreeForAll />} />
+      </Routes>
+    </statesContext.Provider>
   );
 }
 
-createRoot(document.getElementById("root")).render(<App />);
+createRoot(document.getElementById("root")).render(
+  <BrowserRouter basename="/Alpaca-Video-Battle">
+    <App />
+  </BrowserRouter>
+);
