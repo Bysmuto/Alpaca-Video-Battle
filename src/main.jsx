@@ -1060,7 +1060,7 @@ export const list = [
 function App() {
   const navigate = useNavigate();
   const [states, setStates] = useState({
-    currentPage: "CustomGamePage",
+    currentPage: "start",
 
     databasePlayList: {},
     databasePlayListName: "",

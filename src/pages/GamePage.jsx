@@ -392,6 +392,16 @@ export function GameTournament({}) {
     });
   }
 
+  function vote(videoIndex) {
+    const roundWinner = currentPlaylist[0][videoIndex];
+    setRoundWinners((prevNextRound) => [...prevNextRound, roundWinner]);
+  
+    setCurrentPlaylist((prevNextRound) => {
+      return [...prevNextRound].slice(1); // <-- Ensure new reference
+    });
+  }
+
+
   if (currentPlaylist.length >= 1) {
     return (
       <div className="flex flex-col items-center justify-center  ">
@@ -430,7 +440,7 @@ export function GameTournament({}) {
 export function GameOneVsAll({}) {
   const [states, setStates] = useContext(statesContext);
 
-  const startPlaylist =list //Object.values(states.databasePlayList);
+  const startPlaylist =Object.values(states.databasePlayList);
   const shuffled = shuffleArray(startPlaylist);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
   const finalPlaylist = sliced;
@@ -503,7 +513,7 @@ export function GameOneVsAll({}) {
 export function GameFreeForAll({}) {
   const [states, setStates] = useContext(statesContext);
 
-  const startPlaylist =list //Object.values(states.databasePlayList);
+  const startPlaylist =Object.values(states.databasePlayList);
   const shuffled = shuffleArray(startPlaylist);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
   const finalPlaylist = sliced;

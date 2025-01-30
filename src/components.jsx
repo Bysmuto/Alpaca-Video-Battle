@@ -1055,7 +1055,7 @@ export function component({}) {
   return <></>;
 }
 
-export function Button({ name, func, img, extra }) {
+export function Button({ name, func,  extra }) {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   useEffect(() => {
@@ -1070,6 +1070,7 @@ export function Button({ name, func, img, extra }) {
 
   const handleClick = async () => {
     setIsButtonDisabled(true);
+    console.log('pressed');
     if (typeof func === "function") {
       await func();
     }

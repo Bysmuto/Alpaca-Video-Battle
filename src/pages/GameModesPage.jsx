@@ -55,13 +55,13 @@ export default function GameModesPage({}) {
             <Button
               name="full"
               func={() => selectMode("hell")}
-              extra={"bg-orange-500"}
+             
             />
             <Button name="normal" func={() => selectMode("normal")} />
             <Button
               name="quick"
               func={() => selectMode("quick")}
-              extra={"bg-blue-400"}
+             
             />
           </div>
 
