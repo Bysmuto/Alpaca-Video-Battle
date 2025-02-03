@@ -1,8 +1,8 @@
-import { useContext, useState,useEffect } from "react";
+import { useContext, useState} from "react";
 import { statesContext } from "../main.jsx";
-import { Button } from "../components.jsx";
 
-export  default function CustomGameVariable({variable}) {
+
+export  default function AddGameVariable({variable}) {
   const [states, setStates] = useContext(statesContext);
   const [inputValue, setInputValue] = useState("");
 

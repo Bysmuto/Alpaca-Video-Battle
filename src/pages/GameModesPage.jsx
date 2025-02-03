@@ -1,6 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, } from "react";
 import { statesContext } from "../main.jsx";
-import { Button } from "../components.jsx";
+import Button  from "../Components/Button.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function GameModesPage({}) {
