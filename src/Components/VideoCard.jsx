@@ -1,17 +1,73 @@
-
 import Button from "./Button";
 import WrappedText from "./WrappedText";
 import YoutubeVideo from "./YoutubeVideo";
 import WindowFrame from "./WindowFrame";
+import { motion } from "framer-motion";
 
-export default function VideoCard({ videoId, videoTitle, vote }) {
+
+export function FreeForAllCard({ videoId, videoTitle, vote, isRight }) {
   return (
-    <div className="space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4">
+    <motion.div
+      initial={{ x: isRight ? "-80vw" : "80vw" }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 12 }}
+      className="space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4"
+    >
       <WindowFrame
-        title={<WrappedText text={videoTitle}  textColor="text-main" />}
+        title={<WrappedText text={videoTitle} textColor="text-main" />}
         content={<YoutubeVideo videoId={videoId} />}
       />
       <Button name="vote" func={vote} extra="w-full" />
-    </div>
+    </motion.div>
+  );
+}
+
+export function OneVsAllCard({ videoId, videoTitle, vote,  }) {
+  return (
+    <motion.div
+      initial={{ y: 320  }}
+      animate={{ y: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 12 }}
+      className="space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4"
+    >
+      <WindowFrame
+        title={<WrappedText text={videoTitle} textColor="text-main" />}
+        content={<YoutubeVideo videoId={videoId} />}
+      />
+      <Button name="vote" func={vote} extra="w-full" />
+    </motion.div>
+  );
+}
+
+export function TournamentCard({ videoId, videoTitle, vote, isRight }) {
+  return (
+    <motion.div
+      initial={{ x: isRight ? "-80vw" : "80vw" }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 120, damping: 12 }}
+      className="space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4"
+    >
+      <WindowFrame
+        title={<WrappedText text={videoTitle} textColor="text-main" />}
+        content={<YoutubeVideo videoId={videoId} />}
+      />
+      <Button name="vote" func={vote} extra="w-full" />
+    </motion.div>
+  );
+}
+
+export  function AlpacaCard({  vote }) {
+  return (
+    <motion.div
+    initial={{ opacity: 0, y: 50 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.9 }}
+   className="space-y-5 flex flex-col items-center justify-center h-[60vh] w-[40vw] m-4">
+      <WindowFrame
+        title={<WrappedText text={"The Alpaca"} textColor="text-main" />}
+        content={<YoutubeVideo videoId={"-MFFBA8bdd8"} />}
+      />
+      <Button name="vote" func={vote} extra="w-full" />
+    </motion.div>
   );
 }
