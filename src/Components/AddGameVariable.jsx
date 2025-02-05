@@ -21,6 +21,9 @@ export  default function AddGameVariable({variable}) {
       if (variable === 'timeLimit') {
         newState.timeLimit = +event.target.value; 
       }
+      if (variable === 'randomEvents') {
+        newState.randomEvents = +event.target.value; 
+      }
       return newState;
     });
   }}

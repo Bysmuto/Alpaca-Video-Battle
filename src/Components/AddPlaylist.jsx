@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { statesContext } from '../main'; ; // Adjust the path based on your project structure
 import Button from './Button'; // Adjust the path if needed
-import { addPlaylistToDatabase, fetchPlaylists } from '../database'; // Adjust the path if needed
+import { addPlaylistToDatabase, fetchPlaylists } from '../utils/database'; // Adjust the path if needed
 
 export default function AddPlaylist() {
   const [states, setStates] = useContext(statesContext);

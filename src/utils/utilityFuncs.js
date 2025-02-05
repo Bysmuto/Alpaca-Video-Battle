@@ -1,3 +1,7 @@
+import { useContext } from "react";
+import { statesContext } from "../main.jsx";
+
+
 export async function getVideoTitle(videoId) {
   const ytk = "AIzaSyAcM3fuIbRmXAPVUAsbi7wpywukclOu2a0";
   const response = await fetch(
@@ -59,8 +63,6 @@ export function getRandomIndices(count, list, excludeIndices = []) {
   }
   return indices;
 }
-
-//---
 
 export function shuffleArray(array) {
   // Create a copy to avoid modifying original array
@@ -132,4 +134,19 @@ function trimToPowerOfTwo(arr) {
   }
 
   return arr.slice(0, power); // Trim array to the closest lesser power of two
+}
+
+
+export function preparePlaylist(playlist) {
+  const [states] = useContext(statesContext);
+
+  const shuffled = shuffleArray(playlist);
+  const sliced = shuffled.slice(0, states.playlistMaxNumber);
+
+  if (states.gameMode === "GameTournament") {
+    const paired = separateIntoPairs(sliced);
+    return paired;
+  }
+
+  return sliced;
 }

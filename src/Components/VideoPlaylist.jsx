@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { statesContext } from "../main"; // Adjust the path based on your project structure
 import Button from "./Button"; // Adjust the path if needed
 import WrappedText from "./WrappedText";
-import { changeState } from "../utilityFuncs"; // Adjust the path if needed
-import { removeItemFromDatabase, fetchPlaylist } from "../database";
+import { changeState } from "../utils/utilityFuncs"; // Adjust the path if needed
+import { removeItemFromDatabase, fetchPlaylist } from "../utils/database";
 
 export default function VideoPlaylist({ video, videoKey }) {
   const [states, setStates] = useContext(statesContext);

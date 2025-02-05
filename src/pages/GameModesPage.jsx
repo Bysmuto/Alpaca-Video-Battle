@@ -14,7 +14,8 @@ export default function GameModesPage({}) {
         ...prevState,
         gameMode: "GameTournament",
         playlistMaxNumber: 128,
-        timeLimit: 90,
+        timeLimit: 180,
+        randomEvents: 0,
       }));
       changePage("GameTournament");
     }
@@ -24,7 +25,8 @@ export default function GameModesPage({}) {
         ...prevState,
         gameMode: "GameOneVsAll",
         playlistMaxNumber: 50,
-        timeLimit: 30,
+        timeLimit: 60,
+        randomEvents: 10,
       }));
       changePage("GameOneVsAll");
     }
@@ -34,7 +36,8 @@ export default function GameModesPage({}) {
         ...prevState,
         gameMode: "GameFreeForAll",
         playlistMaxNumber: 500,
-        timeLimit: 300,
+        timeLimit: 180,
+        randomEvents: 80,
       }));
       changePage("GameFreeForAll");
     }
@@ -53,7 +56,7 @@ export default function GameModesPage({}) {
           <h1 className="text-center text-4xl m-10">GAME MODE</h1>
           <div className=" flex justify-center items-center space-x-5">
             <Button
-              name="full"
+              name="hell"
               func={() => selectMode("hell")}
              
             />

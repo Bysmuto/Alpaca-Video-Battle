@@ -3,14 +3,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createRoot } from "react-dom/client";
 import { useNavigate } from "react-router-dom";
 
-
 import "./css/main.css";
 
-import {
-  GameTournament,
-  GameOneVsAll,
-  GameFreeForAll,
-} from "./pages/GamePage.jsx";
+import GameFreeForAll from "./Modes/GameFreeForAll.jsx";
+import GameOneVsAll from "./Modes/GameOneVsAll.jsx";
+import GameTournament from "./Modes/GameTournament.jsx";
+
 import GameModesPage from "./pages/GameModesPage.jsx";
 import CustomGamePage from "./pages/CustomGamePage.jsx";
 import StartPage from "./pages/StartPage.jsx";
@@ -18,12 +16,8 @@ import PlaylistsPage from "./pages/PlaylistsPage.jsx";
 import PlaylistPage from "./pages/PlaylistPage.jsx";
 import WinnerPage from "./pages/WinnerPage.jsx";
 
-
-
 export const statesContext = createContext();
 
-
- 
 function App() {
   const navigate = useNavigate();
   const [states, setStates] = useState({
@@ -37,14 +31,12 @@ function App() {
     timeLimit: 0,
     playlistMaxNumber: 0,
 
-    winner:{
-      title: "The Way of the Samurai",
-      videoId: "oRUvfEIuQrA",
-    },
+    randomEvents: 50,
+
+    winner: {}
   });
 
   useEffect(() => {
-    console.log(states);
     if (states.currentPage === "start") navigate("/");
     if (states.currentPage === "PlaylistsPage") navigate("/PlaylistsPage");
     if (states.currentPage === "PlaylistPage") navigate("/PlaylistPage");
@@ -54,15 +46,14 @@ function App() {
     if (states.currentPage === "GameOneVsAll") navigate("/GameOneVsAll");
     if (states.currentPage === "GameFreeForAll") navigate("/GameFreeForAll");
     if (states.currentPage === "WinnerPage") navigate("/WinnerPage");
-  }, [states.currentPage, navigate]); 
-
+  }, [states.currentPage, navigate]);
 
   function changePage(page) {
-    setStates((prev) => ({ ...prev, currentPage: page }))
+    setStates((prev) => ({ ...prev, currentPage: page }));
   }
 
   return (
-    <statesContext.Provider value={[states, setStates,changePage]}>
+    <statesContext.Provider value={[states, setStates, changePage]}>
       <Routes>
         <Route path="/" element={<StartPage />} />
         <Route path="/PlaylistsPage" element={<PlaylistsPage />} />

@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { statesContext } from '../main'; // Adjust the path based on your project structure
 import Button from './Button'; // Adjust the path if needed
-import { getVideoId, getVideoTitle,changeState } from '../utilityFuncs'; // Adjust the path if needed
-import { addItemToDatabase, fetchPlaylist } from  '../database';
+import { getVideoId, getVideoTitle,changeState } from '../utils/utilityFuncs'; // Adjust the path if needed
+import { addItemToDatabase, fetchPlaylist } from  '../utils/database';
 export default function AddVideo() {
   const [states, setStates] = useContext(statesContext);
   const [inputValue, setInputValue] = useState("");

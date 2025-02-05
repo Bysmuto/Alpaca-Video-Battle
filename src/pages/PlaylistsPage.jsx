@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { statesContext } from "../main";
-import { fetchPlaylists } from "../database";
-import { changeState } from "../utilityFuncs";
+import { fetchPlaylists } from "../utils/database";
+import { changeState } from "../utils/utilityFuncs";
 import WindowFrame from "../Components/WindowFrame";
 import AddPlaylist from "../Components/AddPlaylist";
 import Button from "../Components/Button";
