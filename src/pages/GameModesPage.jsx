@@ -51,8 +51,17 @@ export default function GameModesPage({}) {
 
   return (
     <>
-      <div className=" h-[100vh] flex items-center justify-center">
+         <Button
+            name={"<"}
+            func={() => changePage("PlaylistsPage")}
+            extra={"text-xs m-5"}
+          />
+      <div className=" h-[100vh] flex flex-col items-center justify-center bg-">
+      <div className=" p-3 ">
+                 
+                  </div>
         <div className="flex flex-col w-[40vw]  justify-center items-center  gap-8">
+             
           <h1 className="text-center text-4xl m-10">GAME MODE</h1>
           <div className=" flex justify-center items-center space-x-5">
             <Button

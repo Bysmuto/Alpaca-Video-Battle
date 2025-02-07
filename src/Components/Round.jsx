@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef,useContext } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { statesContext } from "../main.jsx";
 export default function Round({ stateChange, maxRound }) {
   const [states] = useContext(statesContext);
@@ -10,13 +10,11 @@ export default function Round({ stateChange, maxRound }) {
   }, [stateChange]);
 
   return (
-    <div className="text-2xl">
-      Round <span className="text-main text-3xl">{round}</span> 
-      {states.gameMode === "GameTournament" && (
-        <span className="text-white text-opacity-50 text-2xl">
-          of {initialMaxRound.current}
-        </span>
-      )}
+    <div className="">
+      Round <span className="text-main text-xl">{round}</span>
+      <span className="text-white text-opacity-50 ">
+        /{initialMaxRound.current}
+      </span>
     </div>
   );
 }

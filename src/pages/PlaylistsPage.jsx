@@ -42,10 +42,11 @@ export default function PlaylistsPage() {
         loading
       ) : (
         <div className="flex items-center justify-center h-[100vh]">
+       
           <div className="flex flex-col space-y-5 items-center w-[80vw]">
             <WindowFrame
               title={
-                <span className="text-main pl-6 text-xl">Select playlists</span>
+                <span className="text-main pl-2 text-xl">Select playlists</span>
               }
               content={
                 <>

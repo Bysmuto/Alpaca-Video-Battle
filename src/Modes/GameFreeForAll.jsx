@@ -3,22 +3,49 @@ import { getRandomIndex, preparePlaylist } from "../utils/utilityFuncs.js";
 import { statesContext } from "../main.jsx";
 import Round from "../Components/Round.jsx";
 import Timer from "../Components/Timer.jsx";
-import {FreeForAllCard,AlpacaCard} from "../Components/VideoCard.jsx";
+import { FreeForAllCard, AlpacaCard } from "../Components/VideoCard.jsx";
 import Button from "../Components/Button.jsx";
 
+import spin from "../../public/sounds/spin.mp3";
 
 export default function GameFreeForAll({}) {
   const [states, setStates, changePage] = useContext(statesContext);
 
-  const [currentPlaylist, setCurrentPlaylist] = useState(preparePlaylist(Object.values(states.databasePlayList)));
+  //main
+  const [currentPlaylist, setCurrentPlaylist] = useState(
+    preparePlaylist(Object.values(states.databasePlayList))
+  );
   const [seconds, setSeconds] = useState(states.timeLimit);
-  const buttonDisabled = useRef(false);
 
-  const [hideVideo1, setHideVideo1] = useState(false);
-  const [hideVideo2, setHideVideo2] = useState(false);
-  const [makeCopies, setMakeCopies] = useState(false);
-  const [skipButton, setSkipButton] = useState(false);
-  const [forceRender, setForceRender] = useState(false);
+  function vote(indexToRemove) {
+    playSound();
+
+    if (makeCopies) {
+      setCurrentPlaylist((prevItens) => [
+        ...prevItens,
+        ...Array(2)
+          .fill(null)
+          .map(() => prevItens[indexToRemove])
+      ]);
+    }
+
+    resetEvents();
+
+    setCurrentPlaylist((prevItens) =>
+      prevItens.filter((_, index) => index !== indexToRemove)
+    );
+  }
+
+  //sound
+  const audioRef = useRef(new Audio(spin));
+  function playSound() {
+    audioRef.current.volume = 0.4;
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+  }
+  useEffect(() => {
+     playSound()
+  }, []);
 
   useEffect(() => {
     if (currentPlaylist.length === 1) {
@@ -28,6 +55,14 @@ export default function GameFreeForAll({}) {
     console.log(currentPlaylist);
   }, [currentPlaylist]);
 
+  //events
+  const [hideVideo1, setHideVideo1] = useState(false);
+  const [hideVideo2, setHideVideo2] = useState(false);
+  const [makeCopies, setMakeCopies] = useState(false);
+  const [skipButton, setSkipButton] = useState(false);
+  const [forceRender, setForceRender] = useState(false);
+
+  
   useEffect(() => {
     if (
       currentPlaylist.length > 3 &&
@@ -62,31 +97,6 @@ export default function GameFreeForAll({}) {
       events[Math.floor(Math.random() * events.length)]();
     }
   }, [currentPlaylist]);
-
-  function vote(indexToRemove) {
-    if (buttonDisabled.current) return;
-
-    if (makeCopies) {
-      setCurrentPlaylist((prevItens) => [
-        ...prevItens,
-        ...Array(2)
-          .fill(null)
-          .map(() => prevItens[indexToRemove])
-      ]);
-    }
-
-    resetEvents();
-
-    buttonDisabled.current = true;
-
-    setTimeout(() => {
-      buttonDisabled.current = false;
-    }, 1500);
-
-    setCurrentPlaylist((prevItens) =>
-      prevItens.filter((_, index) => index !== indexToRemove)
-    );
-  }
 
   function resetEvents() {
     setHideVideo1(false);
@@ -147,17 +157,20 @@ export default function GameFreeForAll({}) {
 
     return (
       <div className="flex flex-col items-center justify-center  ">
-        <div className="w-full flex justify-end p-3">
+        <div className="w-full flex justify-between items-center p-3 ">
+          <Button
+            name={"<"}
+            func={() => changePage("GameModesPage")}
+            extra={"text-xs"}
+          />
+          <Round
+            stateChange={currentPlaylist}
+            maxRound={currentPlaylist.length}
+          />
           <Timer
             seconds={seconds}
             state={currentPlaylist}
             funcToVote={() => vote(index1)}
-          />
-        </div>
-        <div className="w-full flex justify-center p-3">
-          <Round
-            stateChange={currentPlaylist}
-            maxRound={currentPlaylist.length}
           />
         </div>
 

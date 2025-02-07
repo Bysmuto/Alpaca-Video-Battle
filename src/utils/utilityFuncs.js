@@ -150,3 +150,18 @@ export function preparePlaylist(playlist) {
 
   return sliced;
 }
+
+
+function disableVote(){
+      // const buttonDisabled = useRef(false);
+
+
+    
+    // if (buttonDisabled.current) return;
+     // buttonDisabled.current = true;
+
+    // setTimeout(() => {
+    //   buttonDisabled.current = false;
+    // }, 1500);
+
+}

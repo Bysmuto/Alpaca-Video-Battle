@@ -23,5 +23,5 @@ export default function Timer({ seconds, state, funcToVote }) {
     return () => clearInterval(timerId);
   }, [timeLeft]);
 
-  return <h1 className="text-3xl m-4">{formatTime(timeLeft)}</h1>;
+  return timeLeft>10 ? <h1 className="text-xl ">{formatTime(timeLeft)}</h1>: <h1 className="text-2xl text-red-500 ">{formatTime(timeLeft)}</h1>
 }

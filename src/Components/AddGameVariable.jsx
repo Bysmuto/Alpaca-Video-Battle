@@ -2,13 +2,13 @@ import { useContext, useState} from "react";
 import { statesContext } from "../main.jsx";
 
 
-export  default function AddGameVariable({variable}) {
+export  default function AddGameVariable({variable,placeholder}) {
   const [states, setStates] = useContext(statesContext);
-  const [inputValue, setInputValue] = useState("");
+
 
 
   return (
-    <div className=" w-[100%] flex items-center justify-center m-4">
+    <div className=" w-[50%] flex items-center justify-center m-4">
       <input
   className="text-main p-4 w-[100%] rounded-sm"
   type="number"
@@ -27,7 +27,7 @@ export  default function AddGameVariable({variable}) {
       return newState;
     });
   }}
-  placeholder="0"
+  placeholder={placeholder}
 />
 
     </div>

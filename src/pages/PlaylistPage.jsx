@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { statesContext } from "../main";// Adjust the path if needed
+import { statesContext } from "../main"; // Adjust the path if needed
 import Button from "../Components/Button"; // Adjust the path if needed
 import PlaylistInfo from "../Components/PlaylistInfo"; // Adjust the path if needed
 import AddVideo from "../Components/AddVideo"; // Adjust the path if needed
@@ -12,6 +12,13 @@ export default function PlaylistPage() {
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
+        <div className="w-full flex justify-between items-center p-3 ">
+          <Button
+            name={"<"}
+            func={() => changePage("PlaylistsPage")}
+            extra={"text-xs"}
+          />
+        </div>
         <WindowFrame
           title={<PlaylistInfo />}
           content={
