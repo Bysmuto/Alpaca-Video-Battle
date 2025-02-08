@@ -11,7 +11,7 @@ export default function WinnerPage({ }) {
     //sound
     const audioRef = useRef(new Audio(ding));
     function playSound() {
-      audioRef.current.volume = 1;
+      audioRef.current.volume = 0.5;
       audioRef.current.currentTime = 0;
       audioRef.current.play();
     }
@@ -29,7 +29,8 @@ export default function WinnerPage({ }) {
             videoId={states.winner.videoId}
   
             func={() => {
-              window.location.replace("/");
+              changePage('start')
+              window.location.reload();
             }}
           />
         </div>

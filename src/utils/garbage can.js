@@ -42,3 +42,38 @@
           // }, 1500);
       
       }
+
+      function routes() {
+        // import { BrowserRouter, Routes, Route } from "react-router-dom";
+        // import { useNavigate } from "react-router-dom";
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (states.currentPage === "start") navigate("/");
+  //   if (states.currentPage === "PlaylistsPage") navigate("/PlaylistsPage");
+  //   if (states.currentPage === "PlaylistPage") navigate("/PlaylistPage");
+  //   if (states.currentPage === "GameModesPage") navigate("/GameModesPage");
+  //   if (states.currentPage === "CustomGamePage") navigate("/CustomGamePage");
+  //   if (states.currentPage === "GameTournament") navigate("/GameTournament");
+  //   if (states.currentPage === "GameOneVsAll") navigate("/GameOneVsAll");
+  //   if (states.currentPage === "GameFreeForAll") navigate("/GameFreeForAll");
+  //   if (states.currentPage === "WinnerPage") navigate("/WinnerPage");
+  // }, [states.currentPage, navigate]);
+
+
+              {/* <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/PlaylistsPage" element={<PlaylistsPage />} />
+        <Route path="/PlaylistPage" element={<PlaylistPage />} />
+        <Route path="/GameModesPage" element={<GameModesPage />} />
+        <Route path="/CustomGamePage" element={<CustomGamePage />} />
+        <Route path="/GameTournament" element={<GameTournament />} />
+        <Route path="/GameOneVsAll" element={<GameOneVsAll />} />
+        <Route path="/GameFreeForAll" element={<GameFreeForAll />} />
+        <Route path="/WinnerPage" element={<WinnerPage />} />
+      </Routes> */}
+
+
+       // <BrowserRouter basename="/Alpaca-Video-Battle">
+    // <App />
+    // </BrowserRouter>
+      }

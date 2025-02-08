@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import { createRoot } from "react-dom/client";
-import { useNavigate } from "react-router-dom";
 
 import "./css/main.css";
 
@@ -15,8 +14,6 @@ import PlaylistsPage from "./pages/PlaylistsPage.jsx";
 import PlaylistPage from "./pages/PlaylistPage.jsx";
 import WinnerPage from "./pages/WinnerPage.jsx";
 
-export const statesContext = createContext();
-
 const list = [
   {
     title: "The Way of the Samurai",
@@ -27,13 +24,11 @@ const list = [
     videoId: "y2Pay-MYsFw"
   },
   {
-    title:
-      "Time to Fight! (Bionis' Shoulder) - Xenoblade Chronicle: Future Connected OST [05]",
+    title: "Time to Fight! (Bionis' Shoulder) - Xenoblade Chronicle: Future Connected OST [05]",
     videoId: "gdqGq0rZ5LU"
   },
   {
-    title:
-      "Assassin's Creed Odysse: Legend of the Eagle Bearer (Main Theme) | The Flight",
+    title: "Assassin's Creed Odysse: Legend of the Eagle Bearer (Main Theme) | The Flight",
     videoId: "eA0nbtxfeq4"
   },
   {
@@ -86,8 +81,7 @@ const list = [
     videoId: "hWhgrA2dhrk"
   },
   {
-    title:
-      "Main Theme (Full Version) - The Legend of Zeld: Tears of the Kingdom OST",
+    title: "Main Theme (Full Version) - The Legend of Zeld: Tears of the Kingdom OST",
     videoId: "FKLHDgbTD0k"
   },
   {
@@ -156,8 +150,7 @@ const list = [
     videoId: "CqigaFzqhys"
   },
   {
-    title:
-      "Disk 02-06 I'm Every Reaper - Vampire Survivors Original Soundtrack",
+    title: "Disk 02-06 I'm Every Reaper - Vampire Survivors Original Soundtrack",
     videoId: "4OksbeQdXRo"
   },
   {
@@ -205,8 +198,7 @@ const list = [
     videoId: "4_-eEf91hwo"
   },
   {
-    title:
-      "Braum, the Heart of the Freljord | Login Screen - League of Legends",
+    title: "Braum, the Heart of the Freljord | Login Screen - League of Legends",
     videoId: "F8cPDpXnQa0"
   },
   {
@@ -218,8 +210,7 @@ const list = [
     videoId: "0F9Nvxyt9t8"
   },
   {
-    title:
-      "Bloodborne Soundtrack OST - Ludwig, The Accursed & Holy Blade (The Old Hunters)",
+    title: "Bloodborne Soundtrack OST - Ludwig, The Accursed & Holy Blade (The Old Hunters)",
     videoId: "ALbVEmzY5S4"
   },
   {
@@ -248,8 +239,7 @@ const list = [
     videoId: "_9J8ccza1OI"
   },
   {
-    title:
-      "League of Legends - Light and Shadow (Hiroyuki Sawano feat. Gemie) | Official music",
+    title: "League of Legends - Light and Shadow (Hiroyuki Sawano feat. Gemie) | Official music",
     videoId: "cmzVnvl3xQg"
   },
   {
@@ -282,13 +272,11 @@ const list = [
     videoId: "q2DBeby7ni8"
   },
   {
-    title:
-      "Crimson Cloud - V's Battle Theme from Devil May Cry 5 (Extended HD Version)",
+    title: "Crimson Cloud - V's Battle Theme from Devil May Cry 5 (Extended HD Version)",
     videoId: "mDdQBxbdj6k"
   },
   {
-    title:
-      "Bury the Light - Vergil's battle theme from Devil May Cry 5 Special Edition",
+    title: "Bury the Light - Vergil's battle theme from Devil May Cry 5 Special Edition",
     videoId: "Jrg9KxGNeJY"
   },
   {
@@ -308,8 +296,7 @@ const list = [
     videoId: "gGJenum-clc"
   },
   {
-    title:
-      "Assassin's Creed IV Black Flag - Assassin's Creed IV Black Flag Main Theme (Track 01)",
+    title: "Assassin's Creed IV Black Flag - Assassin's Creed IV Black Flag Main Theme (Track 01)",
     videoId: "UNREuwdJCw0"
   },
   {
@@ -318,9 +305,8 @@ const list = [
   }
 ];
 
-
+export const statesContext = createContext();
 function App() {
-  const navigate = useNavigate();
   const [states, setStates] = useState({
     currentPage: "start",
 
@@ -338,21 +324,8 @@ function App() {
   });
 
   useEffect(() => {
-console.log(states);
+    console.log(states);
   }, [states]);
-
-
-  useEffect(() => {
-    if (states.currentPage === "start") navigate("/");
-    if (states.currentPage === "PlaylistsPage") navigate("/PlaylistsPage");
-    if (states.currentPage === "PlaylistPage") navigate("/PlaylistPage");
-    if (states.currentPage === "GameModesPage") navigate("/GameModesPage");
-    if (states.currentPage === "CustomGamePage") navigate("/CustomGamePage");
-    if (states.currentPage === "GameTournament") navigate("/GameTournament");
-    if (states.currentPage === "GameOneVsAll") navigate("/GameOneVsAll");
-    if (states.currentPage === "GameFreeForAll") navigate("/GameFreeForAll");
-    if (states.currentPage === "WinnerPage") navigate("/WinnerPage");
-  }, [states.currentPage, navigate]);
 
   function changePage(page) {
     setStates((prev) => ({ ...prev, currentPage: page }));
@@ -360,23 +333,19 @@ console.log(states);
 
   return (
     <statesContext.Provider value={[states, setStates, changePage]}>
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        <Route path="/PlaylistsPage" element={<PlaylistsPage />} />
-        <Route path="/PlaylistPage" element={<PlaylistPage />} />
-        <Route path="/GameModesPage" element={<GameModesPage />} />
-        <Route path="/CustomGamePage" element={<CustomGamePage />} />
-        <Route path="/GameTournament" element={<GameTournament />} />
-        <Route path="/GameOneVsAll" element={<GameOneVsAll />} />
-        <Route path="/GameFreeForAll" element={<GameFreeForAll />} />
-        <Route path="/WinnerPage" element={<WinnerPage />} />
-      </Routes>
+      <>
+        {states.currentPage === "start" && <StartPage />}
+        {states.currentPage === "PlaylistsPage" && <PlaylistsPage />}
+        {states.currentPage === "PlaylistPage" && <PlaylistPage />}
+        {states.currentPage === "GameModesPage" && <GameModesPage />}
+        {states.currentPage === "CustomGamePage" && <CustomGamePage />}
+        {states.currentPage === "GameTournament" && <GameTournament />}
+        {states.currentPage === "GameOneVsAll" && <GameOneVsAll />}
+        {states.currentPage === "GameFreeForAll" && <GameFreeForAll />}
+        {states.currentPage === "WinnerPage" && <WinnerPage />}
+      </>
     </statesContext.Provider>
   );
 }
 
-createRoot(document.getElementById("root")).render(
-  <BrowserRouter basename="/Alpaca-Video-Battle">
-    <App />
-  </BrowserRouter>
-);
+createRoot(document.getElementById("root")).render(<App />);
