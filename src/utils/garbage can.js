@@ -1,6 +1,12 @@
-import React from 'react'
+       
+       function windowFrames(params) {
 
-export default function WindowFrame({title,content,extra}) {
+        //  <WindowFrame
+        //        title={<WrappedText text={videoTitle} textColor="text-main" />}
+        //        content={<YoutubeVideo videoId={videoId} />}
+        //      />
+              
+       {/* export default function WindowFrame({title,content,extra}) {
   return (
       <div className={`flex flex-col w-full h-full border-4 border-main bg-white  ${extra || ""}`}>
           <div id='winTitle' className="flex text-main justify-between items-center bg-white px-2 py-1 border-b-4 border-green-500">
@@ -19,5 +25,20 @@ export default function WindowFrame({title,content,extra}) {
           </div>
         </div>
   )
-}
+} */}
+       }
+ 
 
+          function disableVote(){
+            // const buttonDisabled = useRef(false);
+      
+      
+          
+          // if (buttonDisabled.current) return;
+           // buttonDisabled.current = true;
+      
+          // setTimeout(() => {
+          //   buttonDisabled.current = false;
+          // }, 1500);
+      
+      }

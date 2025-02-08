@@ -10,7 +10,7 @@ export  default function AddGameVariable({variable,placeholder}) {
   return (
     <div className=" w-[50%] flex items-center justify-center m-4">
       <input
-  className="text-main p-4 w-[100%] rounded-sm"
+  className="text-main text-xs p-4 w-[100%] rounded-sm"
   type="number"
   onChange={(event) => {
     setStates((prevState) => {

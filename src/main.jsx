@@ -322,7 +322,7 @@ const list = [
 function App() {
   const navigate = useNavigate();
   const [states, setStates] = useState({
-    currentPage: "start",
+    currentPage: "GameModesPage",
 
     databasePlayList: list,
     databasePlayListName: "",

@@ -19,7 +19,7 @@ export default function Button({ name, func, extra }) {
       className={`px-8 py-4 bg-main text-lg border-b-4 border-l-4 border-green-900 shadow-inner 
         ${extra || ""}`}
       onClick={()=>func()}
-      onHoverStart={playSound}
+      onMouseEnter ={playSound}
     >
       {name}
     </motion.button>

@@ -3,16 +3,16 @@ import { getRandomIndex, preparePlaylist } from "../utils/utilityFuncs.js";
 import { statesContext } from "../main.jsx";
 import Round from "../Components/Round.jsx";
 import Timer from "../Components/Timer.jsx";
-import {OneVsAllCard,AlpacaCard} from "../Components/VideoCard.jsx";
+import { OneVsAllCard, AlpacaCard } from "../Components/VideoCard.jsx";
 import Button from "../Components/Button.jsx";
 import woosh from "../../public/sounds/woosh.mp3";
 
 export default function GameFreeForAll({}) {
   const [states, setStates, changePage] = useContext(statesContext);
 
-  
-
-  const [currentPlaylist, setCurrentPlaylist] = useState(preparePlaylist(Object.values(states.databasePlayList)));
+  const [currentPlaylist, setCurrentPlaylist] = useState(
+    preparePlaylist(Object.values(states.databasePlayList))
+  );
   const [seconds, setSeconds] = useState(states.timeLimit);
   const buttonDisabled = useRef(false);
 
@@ -22,9 +22,7 @@ export default function GameFreeForAll({}) {
   const [skipButton, setSkipButton] = useState(false);
   const [forceRender, setForceRender] = useState(false);
 
-
-
-//sound
+  //sound
   const audioRef = useRef(new Audio(woosh));
   function playSound() {
     audioRef.current.volume = 0.8;
@@ -32,9 +30,8 @@ export default function GameFreeForAll({}) {
     audioRef.current.play();
   }
   useEffect(() => {
-     playSound()
+    playSound();
   }, []);
-
 
   useEffect(() => {
     if (currentPlaylist.length === 1) {
@@ -45,10 +42,7 @@ export default function GameFreeForAll({}) {
   }, [currentPlaylist]);
 
   useEffect(() => {
-    if (
-      currentPlaylist.length > 3 &&
-      Math.floor(Math.random() * 100) < states.randomEvents
-    ) {
+    if (currentPlaylist.length > 3 && Math.floor(Math.random() * 100) < states.randomEvents) {
       let eventSkip = () => {
         setSkipButton(true);
       };
@@ -80,7 +74,7 @@ export default function GameFreeForAll({}) {
   }, [currentPlaylist]);
 
   function vote(indexToRemove) {
-    playSound()
+    currentPlaylist.length > 2 && playSound();
 
     if (makeCopies) {
       setCurrentPlaylist((prevItens) => [
@@ -99,9 +93,7 @@ export default function GameFreeForAll({}) {
       buttonDisabled.current = false;
     }, 1500);
 
-    setCurrentPlaylist((prevItens) =>
-      prevItens.filter((_, index) => index !== indexToRemove)
-    );
+    setCurrentPlaylist((prevItens) => prevItens.filter((_, index) => index !== indexToRemove));
   }
 
   function resetEvents() {
@@ -113,84 +105,60 @@ export default function GameFreeForAll({}) {
   }
 
   function eventWarings() {
-    if (seconds === 10)
-      return (
-        <h1 className="m-2 w-full text-center">you only have 10 seconds</h1>
-      );
+    if (seconds === 10) return <h1 className="m-2 w-full text-center">you only have 10 seconds</h1>;
 
     if (makeCopies) {
-      return (
-        <h1 className="m-2 w-full text-center">
-          2 copies of the loser will be made
-        </h1>
-      );
+      return <h1 className="m-2 w-full text-center">2 copies of the loser will be made</h1>;
     }
 
     if (skipButton) {
-      return (
-        <h1 className="m-2 w-full text-center">You can skip if you want</h1>
-      );
+      return <h1 className="m-2 w-full text-center">You can skip if you want</h1>;
     }
 
     if (hideVideo1 && hideVideo2) {
-      return (
-        <h1 className="m-2 w-full text-center">
-          Both videos are hidden behind alpacas
-        </h1>
-      );
+      return <h1 className="m-2 w-full text-center">Both videos are hidden behind alpacas</h1>;
     }
 
     if (hideVideo1) {
       return (
-        <h1 className="m-2 w-full text-center ">
-          the first video is hidden behind the alpaca
-        </h1>
+        <h1 className="m-2 w-full text-center ">the first video is hidden behind the alpaca</h1>
       );
     }
 
     if (hideVideo2) {
-      return (
-        <h1 className="m-2 text-center ">
-          the second video is hidden behind the alpaca
-        </h1>
-      );
+      return <h1 className="m-2 text-center ">the second video is hidden behind the alpaca</h1>;
     }
   }
 
   if (currentPlaylist.length >= 2) {
-    const index1 = 0
-    const index2 = 1
+    const index1 = 0;
+    const index2 = 1;
 
     return (
       <div className="flex flex-col items-center justify-center  ">
- 
-             <div className="w-full flex justify-between items-center p-3 ">
-                  <Button
-                    name={"<"}
-                    func={() => changePage("GameModesPage")}
-                    extra={"text-xs"}
-                  />
-                  <Round
-                    stateChange={currentPlaylist}
-                    maxRound={currentPlaylist.length}
-                  />
-                  <Timer
-                  seconds={seconds}
-                  state={currentPlaylist}
-                  funcToVote={() => vote(index1)}
-                  />
-                </div>
+        <div className="w-full flex justify-between items-center p-3 ">
+          <Button
+            name={"<"}
+            func={() => changePage("GameModesPage")}
+            extra={"text-xs bg-teal-500 border-teal-900"}
+          />
+          <Round
+            stateChange={currentPlaylist}
+            maxRound={currentPlaylist.length}
+            extra={"text-teal-500"}
+          />
+          <Timer seconds={seconds} state={currentPlaylist} funcToVote={() => vote(index1)} />
+        </div>
 
         {eventWarings()}
 
-        <div className="grid grid-cols-2 gap-4 mt-10 relative">
+        <div className="grid grid-cols-2 gap-4 m-4 mt-16 ">
           {hideVideo1 ? (
             <AlpacaCard vote={() => vote(index2)} />
           ) : (
             <OneVsAllCard
               key={`video1-${currentPlaylist}`}
               videoId={currentPlaylist[index1].videoId}
-              videoTitle={currentPlaylist[index1].title}
               vote={() => vote(index2)}
             />
           )}
@@ -201,7 +169,6 @@ export default function GameFreeForAll({}) {
             <OneVsAllCard
               key={`video2-${currentPlaylist}`}
               videoId={currentPlaylist[index2].videoId}
-              videoTitle={currentPlaylist[index2].title}
               vote={() => vote(index1)}
               isRight={true}
             />

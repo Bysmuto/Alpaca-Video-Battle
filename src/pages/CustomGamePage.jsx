@@ -12,64 +12,42 @@ export default function CustomGamePage({}) {
       ...prevState,
       gameMode: mode
     }));
-  }
-
-  function play() {
-    changePage(states.gameMode);
+    changePage(mode);
   }
 
   return (
     <>
-      {" "}
-      <Button
-        name={"<"}
-        func={() => changePage("GameModesPage")}
-        extra={"text-xs m-5"}
-      />
-      <div className="h-[100vh]  flex items-center justify-center">
-        <div className="flex flex-col justify-center items-center w-[40vw]  gap-5">
-          <div className="flex justify-center items-center w-[100%]">
-            <h1 className="text-center text-xl  w-[50%]">videos limit:</h1>
+      <Button name={"<"} func={() => changePage("GameModesPage")} extra={"text-xs m-5"} />
+      <div className="h-[80vh] m-5 flex items-center justify-center">
+        <div className="flex flex-col justify-center items-center  gap-4">
+
+        
+            <h1 className="text-center md:text-xl ">videos limit:</h1>
             <AddGameVariable variable={"playlistMaxNumber"} placeholder={"0"} />
-          </div>
+       
 
-          <div className="flex justify-center items-center w-[100%]">
-            <h1 className="text-center text-xl  w-[50%]">time limit:</h1>
-            <AddGameVariable
-              variable={"timeLimit"}
-              placeholder={"ex: 90 = 1:30m"}
-            />
-          </div>
+      
+            <h1 className="text-center md:text-xl  ">time limit:</h1>
+            <AddGameVariable variable={"timeLimit"} placeholder={"ex: 90 = 1:30m"} />
+          
 
-          <div className="flex justify-center items-center w-[100%]">
-            <h1 className="text-center text-xl  w-[50%]"> events % :</h1>
-            <AddGameVariable
-              variable={"randomEvents"}
-              placeholder={"ex: 0 = 0% 50 = 50%"}
-            />
-          </div>
+      
+            <h1 className="text-center md:text-xl  "> events % :</h1>
+            <AddGameVariable variable={"randomEvents"} placeholder={"ex: 50 = 50%"} />
+        
 
-          <h1 className="text-center text-xl m-5">select mode:</h1>
-          <div className=" flex x justify-center space-x-5">
+          <h1 className="text-center  m-5 md:text-2xl">select mode:</h1>
+          <div className="grid  gap-3 md:grid-cols-3 ">
+
             <Button
               name="free for all"
               func={() => selectMode("GameFreeForAll")}
-              extra={"text-sm"}
+              extra={"text-xs"}
             />
 
-            <Button
-              name="tournament"
-              func={() => selectMode("GameTournament")}
-              extra={"text-sm"}
-            />
-            <Button
-              name="1 vs all"
-              func={() => selectMode("GameOneVsAll")}
-              extra={"text-sm"}
-            />
+            <Button name="tournament" func={() => selectMode("GameTournament")} extra={"text-xs"} />
+            <Button name="1 vs all" func={() => selectMode("GameOneVsAll")} extra={"text-xs"} />
           </div>
-
-          <Button name="play" func={() => play()} extra={"text-sm"} />
         </div>
       </div>
     </>

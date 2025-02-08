@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { statesContext } from "../main.jsx";
-export default function Round({ stateChange, maxRound }) {
+
+export default function Round({ stateChange, maxRound,extra }) {
   const [states] = useContext(statesContext);
   const [round, setRound] = useState(0);
   const initialMaxRound = useRef(maxRound);
@@ -11,10 +12,8 @@ export default function Round({ stateChange, maxRound }) {
 
   return (
     <div className="">
-      Round <span className="text-main text-xl">{round}</span>
-      <span className="text-white text-opacity-50 ">
-        /{initialMaxRound.current}
-      </span>
+      Round <span className={` text-main text-xl    ${extra || ""}`}>{round}</span>
+      <span className="text-white text-opacity-50 ">/{initialMaxRound.current}</span>
     </div>
   );
 }

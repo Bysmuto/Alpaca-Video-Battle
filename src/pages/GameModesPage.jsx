@@ -1,11 +1,8 @@
-import { useContext, } from "react";
+import { useContext } from "react";
 import { statesContext } from "../main.jsx";
-import Button  from "../Components/Button.jsx";
-import { useNavigate } from "react-router-dom";
+import Button from "../Components/Button.jsx";
 
 export default function GameModesPage({}) {
-  const navigate = useNavigate();
-
   const [states, setStates, changePage] = useContext(statesContext);
 
   function selectMode(mode) {
@@ -13,9 +10,9 @@ export default function GameModesPage({}) {
       setStates((prevState) => ({
         ...prevState,
         gameMode: "GameTournament",
-        playlistMaxNumber: 128,
+        playlistMaxNumber: 32,
         timeLimit: 180,
-        randomEvents: 0,
+        randomEvents: 0
       }));
       changePage("GameTournament");
     }
@@ -24,9 +21,9 @@ export default function GameModesPage({}) {
       setStates((prevState) => ({
         ...prevState,
         gameMode: "GameOneVsAll",
-        playlistMaxNumber: 50,
+        playlistMaxNumber: 10,
         timeLimit: 60,
-        randomEvents: 10,
+        randomEvents: 10
       }));
       changePage("GameOneVsAll");
     }
@@ -35,9 +32,9 @@ export default function GameModesPage({}) {
       setStates((prevState) => ({
         ...prevState,
         gameMode: "GameFreeForAll",
-        playlistMaxNumber: 500,
+        playlistMaxNumber: 300,
         timeLimit: 180,
-        randomEvents: 80,
+        randomEvents: 80
       }));
       changePage("GameFreeForAll");
     }
@@ -45,45 +42,41 @@ export default function GameModesPage({}) {
     if (mode === "custom") {
       changePage("CustomGamePage");
     }
-
- 
   }
 
-  return (
-    <>
-         <Button
-            name={"<"}
-            func={() => changePage("PlaylistsPage")}
-            extra={"text-xs m-5"}
+  return (<>
+  
+  <Button name={"<"} func={() => changePage("PlaylistsPage")} extra={"text-xs m-5"} />
+  
+ 
+    <div className="w-[100vw] h-[80vh]  flex  items-center justify-center">
+    
+      <div className=" flex flex-col items-center justify-center ">
+      
+        <div className="grid m-4  gap-8">
+          <h1 className="text-center  w-full md:text-xl">select the game mode</h1>
+
+          <Button name="normal" func={() => selectMode("normal")} />
+
+          <Button
+            name="quick"
+            func={() => selectMode("quick")}
+            extra="bg-teal-500 border-teal-900"
           />
-      <div className=" h-[100vh] flex flex-col items-center justify-center bg-">
-      <div className=" p-3 ">
-                 
-                  </div>
-        <div className="flex flex-col w-[40vw]  justify-center items-center  gap-8">
-             
-          <h1 className="text-center text-4xl m-10">GAME MODE</h1>
-          <div className=" flex justify-center items-center space-x-5">
-            <Button
-              name="hell"
-              func={() => selectMode("hell")}
-             
-            />
-            <Button name="normal" func={() => selectMode("normal")} />
-            <Button
-              name="quick"
-              func={() => selectMode("quick")}
-             
-            />
-          </div>
+          <Button
+            name="hell"
+            func={() => selectMode("hell")}
+            extra={"bg-orange-500 border-orange-900"}
+          />
 
           <Button
             name="Custom"
             func={() => selectMode("custom")}
-            extra={"text-main bg-white w-[50%] "}
+            extra={"text-main bg-white  border-gray-700 "}
           />
         </div>
       </div>
+    </div>
     </>
   );
 }

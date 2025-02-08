@@ -1,33 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext,useRef,useEffect } from "react";
 import { statesContext } from "../main"; // Adjust the path based on your project structure
-import Button from "../Components/Button"; // Adjust the path if needed
-import WindowFrame from "../Components/WindowFrame";
-import WrappedText from "../Components/WrappedText";
-import YoutubeVideo from "../Components/YoutubeVideo";
+import { WinnerCard } from "../Components/VideoCard.jsx";
 
-// Adjust the path if needed
-export default function WinnerPage({ videoId, videoTitle }) {
+import ding from "../../public/sounds/ding.mp3";
+
+
+export default function WinnerPage({ }) {
   const [states, setStates, changePage] = useContext(statesContext);
+
+    //sound
+    const audioRef = useRef(new Audio(ding));
+    function playSound() {
+      audioRef.current.volume = 1;
+      audioRef.current.currentTime = 0;
+      audioRef.current.play();
+    }
+    useEffect(() => {
+       playSound()
+    }, []);
 
   return (
     <>
       <div className="flex justify-center h-[100vh]">
         <div className="flex flex-col items-center space-y-8 justify-center w-[80%] p-6">
-          <h1 className="text-2xl">And the winner is ...</h1>
-          <div className="w-full h-full">
-            <WindowFrame
-              title={
-                <WrappedText text={states.winner.title} textColor="text-main" />
-              }
-              content={<YoutubeVideo videoId={states.winner.videoId} />}
-            />
-          </div>
+          <h1 className="md:text-2xl">And the winner is ...</h1>
 
-          <Button
-            name="Reset"
+          <WinnerCard
+            videoId={states.winner.videoId}
+  
             func={() => {
-              changePage(states.changePage);
-              window.location.reload();
+              window.location.replace("/");
             }}
           />
         </div>

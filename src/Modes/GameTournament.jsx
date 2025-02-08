@@ -37,17 +37,25 @@ export default function GameTournament({}) {
       setStates((prev) => ({ ...prev, winner: roundWinners[0] }));
       changePage("WinnerPage");
     }
+
     console.log(currentPlaylist);
+    console.log(roundWinners);
   }, [currentPlaylist]);
 
   function vote(videoIndex) {
-    playSound()
+  
+
+
+
     const roundWinner = currentPlaylist[0][videoIndex];
     setRoundWinners((prevNextRound) => [...prevNextRound, roundWinner]);
 
     setCurrentPlaylist((prevNextRound) => {
       return [...prevNextRound].slice(1);
     });
+
+     (currentPlaylist.length === 1 && roundWinners.length === 0)?'':playSound()
+
   }
 
   if (currentPlaylist.length >= 1) {
@@ -71,18 +79,18 @@ export default function GameTournament({}) {
         </div>
 
         <div className="m-4 w-full flex justify-center"></div>
-        <div className="grid grid-cols-2 gap-4 mt-10 ">
+        <div className="grid grid-cols-2 gap-4 m-4 mt-10 ">
           <TournamentCard
             key={currentPlaylist[0][0]?.videoId}
             videoId={currentPlaylist[0][0]?.videoId}
-            videoTitle={currentPlaylist[0][0]?.title}
+  
             vote={() => vote(0)}
           />
 
           <TournamentCard
             key={currentPlaylist[0][1]?.videoId}
             videoId={currentPlaylist[0][1]?.videoId}
-            videoTitle={currentPlaylist[0][1]?.title}
+   
             vote={() => vote(1)}
             isRight={true}
           />

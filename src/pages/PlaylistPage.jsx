@@ -12,14 +12,14 @@ export default function PlaylistPage() {
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
+
         <div className="w-full flex justify-between items-center p-3 ">
-          <Button
-            name={"<"}
-            func={() => changePage("PlaylistsPage")}
-            extra={"text-xs"}
-          />
+          <Button name={"<"} func={() => changePage("PlaylistsPage")} extra={"text-xs"} />
         </div>
-        <WindowFrame
+
+       
+          <div className="flex flex-col  items-center w-[80vw]">
+          <WindowFrame
           title={<PlaylistInfo />}
           content={
             <>
@@ -27,7 +27,7 @@ export default function PlaylistPage() {
                 <AddVideo />
               </div>
 
-              <div className="h-[70vh] p-4 overflow-auto">
+              <div className="h-[55vh] p-4 overflow-auto">
                 {states.databasePlayList ? (
                   Object.entries(states.databasePlayList)
                     .reverse()
@@ -41,6 +41,10 @@ export default function PlaylistPage() {
             </>
           }
         />
+          </div>
+      
+
+       
 
         <Button name="play" func={() => changePage("GameModesPage")} />
       </div>
