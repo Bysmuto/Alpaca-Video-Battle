@@ -77,3 +77,34 @@
     // <App />
     // </BrowserRouter>
       }
+
+
+      function autoplayOnHover(params) {
+        // import { useState } from "react";
+        
+        // export default function Video({ videoId, extra }) {
+        //   const [videoSrc, setVideoSrc] = useState(
+        //     `https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0`
+        //   );
+        
+        //   const handleMouseEnter = () => {
+        //     setVideoSrc(`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=1`);
+        //   };
+        
+        //   const handleMouseLeave = () => {
+        //     setVideoSrc(`https://www.youtube.com/embed/${videoId}?enablejsapi=1&autoplay=0`);
+        //   };
+        //   return (
+        //     <iframe
+        //       src={videoSrc}
+        //       onMouseEnter={handleMouseEnter}
+        //       onMouseLeave={handleMouseLeave}
+        //       allow="autoplay; encrypted-media"
+        //       allowFullScreen
+        //       className={`w-full h-full border-4 border-green-500  ${extra || ""}`}
+        //     />
+        //   );
+        // }
+        
+        
+      }

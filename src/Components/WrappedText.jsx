@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function WrappedText({ text,textColor }) {
+export default function WrappedText({ text}) {
   return (
-    <div className={`w-[90%] ${textColor} overflow-hidden text-ellipsis whitespace-nowrap`}>
+    <div className={`w-full overflow-hidden text-ellipsis whitespace-nowrap text-xs md:text-xl`}>
       {text}
     </div>
   );

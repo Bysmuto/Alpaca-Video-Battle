@@ -17,7 +17,7 @@ export default function Button({ name, func, extra }) {
       whileTap={{ scale: 1.05 }}
       transition={{ type: "spring", stiffness: 300 }}
       className={`px-8 py-4 bg-main text-lg border-b-4 border-l-4 border-green-900 shadow-inner 
-        ${extra || ""}`}
+        ${extra || ""} `}
       onClick={()=>func()}
       onMouseEnter ={playSound}
     >

@@ -41,38 +41,25 @@ export default function PlaylistsPage() {
       {playlists.length === 0 ? (
         loading
       ) : (
-        <div className="flex items-center justify-center h-[100vh]">
-       
-          <div className="flex flex-col space-y-5 items-center w-[80vw]">
-            <WindowFrame
-              title={
-                <span className="text-main pl-2 text-xl">Select playlists</span>
-              }
-              content={
-                <>
-                  <div className="flex justify-center">
-                    <AddPlaylist />
-                  </div>
-
-                  <div className="h-[70vh] p-4 overflow-auto flex flex-col items-center space-y-6">
-                    {playlists.map((playlist) => (
-                      <Button
-                        key={playlist[0]}
-                        name={playlist[1].name}
-                        func={() =>
-                          selectPlaylist(
-                            playlist[1].videos,
-                            playlist[1].name,
-                            playlist[0]
-                          )
-                        }
-                        extra={"w-[80%] text-4xl"}
-                      />
-                    ))}
-                  </div>
-                </>
-              }
-            />
+        <div className="flex flex-col items-center justify-center h-[100vh]">
+          <h1 className="text-sm md:text-xl">Select a playlist</h1>
+          <div className="flex flex-col m-4 p-6 space-y-5 items-center w-[80vw] h-[60vh]  border-4 border-main md:w-[50vw]">
+            <div className=" p-4 w-full flex flex-col items-center space-y-6 ">
+              {playlists.map((playlist) => (
+                <Button
+                  key={playlist[0]}
+                  name={playlist[1].name}
+                  func={() => selectPlaylist(playlist[1].videos, playlist[1].name, playlist[0])}
+                  extra={"w-full text-sm md:text-xl"}
+                />
+              ))}
+            </div>
+           
+          </div>
+         
+          <h1 className="text-sm md:text-xl">Create a new playlist</h1>
+          <div className="w-[80vw] m-4 md:w-[50vw]">
+          <AddPlaylist />
           </div>
         </div>
       )}

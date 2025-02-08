@@ -6,7 +6,7 @@ export default function PlaylistInfo() {
   const [states] = useContext(statesContext);
 
   return (
-    <div className="text-main">
+    <div className="">
       {states.databasePlayListName} -{" "}
       {states.databasePlayList
         ? Object.values(states.databasePlayList).length

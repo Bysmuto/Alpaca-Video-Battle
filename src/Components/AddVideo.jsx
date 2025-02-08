@@ -24,9 +24,9 @@ export default function AddVideo() {
   };
 
   return (
-    <div className="w-[100%] flex items-center justify-center m-4">
+    <div className="w-[100%] flex items-center justify-center ">
       <input
-        className="text-main p-4 w-[100%] rounded-sm"
+        className="text-main text-xs p-6 w-[100%] rounded-sm"
         type="text"
         onChange={(event) => {
           setInputValue(event.target.value);
@@ -35,7 +35,7 @@ export default function AddVideo() {
         value={inputValue}
       />
       <Button
-        name="add"
+        name="+"
         func={() => handleClick(states.databasePlayListId, inputValue)}
         extra={"p-2"}
       />

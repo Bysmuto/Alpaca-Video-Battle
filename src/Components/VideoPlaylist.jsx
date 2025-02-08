@@ -21,7 +21,6 @@ export default function VideoPlaylist({ video, videoKey }) {
       
       <WrappedText
         key={videoKey}
-        textColor="text-white"
         text={
           <a
             href={"https://www.youtube.com/watch?v=" + video.videoId}
@@ -34,9 +33,9 @@ export default function VideoPlaylist({ video, videoKey }) {
       />
 
       <Button
-        name="remove"
+        name="X"
         func={() => removeVideo(videoKey)}
-        extra={"text-xs p-2"}
+        extra={" text-xs px-1 py-0 p-4 md:px-8 md:py-4"}
       />
     </div>
   );

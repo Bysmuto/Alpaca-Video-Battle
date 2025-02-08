@@ -12,41 +12,30 @@ export default function PlaylistPage() {
   return (
     <>
       <div className="flex flex-col items-center space-y-6">
-
-        <div className="w-full flex justify-between items-center p-3 ">
+        <div className="w-full flex justify-between items-center p-3  ">
           <Button name={"<"} func={() => changePage("PlaylistsPage")} extra={"text-xs"} />
         </div>
 
-       
-          <div className="flex flex-col  items-center w-[80vw]">
-          <WindowFrame
-          title={<PlaylistInfo />}
-          content={
-            <>
-              <div className="flex justify-center">
-                <AddVideo />
-              </div>
+        <div className="flex flex-col  items-center w-[80vw] space-y-6">
+          <PlaylistInfo />
 
-              <div className="h-[55vh] p-4 overflow-auto">
-                {states.databasePlayList ? (
-                  Object.entries(states.databasePlayList)
-                    .reverse()
-                    .map(([key, video], index) => (
-                      <VideoPlaylist key={index} video={video} videoKey={key} />
-                    ))
-                ) : (
-                  <p>No videos available.</p>
-                )}
-              </div>
-            </>
-          }
-        />
+          <Button name="play" func={() => changePage("GameModesPage")} />
+
+          <div className="h-[55vh] w-[80vw] md:w-[40vw] border-4 border-main p-4 overflow-auto">
+            {states.databasePlayList ? (
+              Object.entries(states.databasePlayList)
+                .reverse()
+                .map(([key, video], index) => (
+                  <VideoPlaylist key={index} video={video} videoKey={key} />
+                ))
+            ) : (
+              <p>No videos available.</p>
+            )}
           </div>
-      
-
-       
-
-        <Button name="play" func={() => changePage("GameModesPage")} />
+          <div className="">
+            <AddVideo />
+          </div>
+        </div>
       </div>
     </>
   );

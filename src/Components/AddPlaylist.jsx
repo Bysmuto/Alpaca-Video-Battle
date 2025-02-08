@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react';
-import { statesContext } from '../main'; ; // Adjust the path based on your project structure
-import Button from './Button'; // Adjust the path if needed
-import { addPlaylistToDatabase, fetchPlaylists } from '../utils/database'; // Adjust the path if needed
+import React, { useContext, useState } from "react";
+import { statesContext } from "../main"; // Adjust the path based on your project structure
+import Button from "./Button"; // Adjust the path if needed
+import { addPlaylistToDatabase, fetchPlaylists } from "../utils/database"; // Adjust the path if needed
 
 export default function AddPlaylist() {
   const [states, setStates] = useContext(statesContext);
@@ -21,18 +21,17 @@ export default function AddPlaylist() {
   };
 
   return (
-    <div className="w-[100%] flex items-center justify-center m-4">
+    <div className="w-full flex items-center justify-center ">
       <input
-        className="text-main p-4 w-[100%] rounded-sm"
+        className="text-main text-xs p-4 w-[100%]"
         type="text"
         onChange={(event) => {
           setInputValue(event.target.value);
         }}
-        placeholder="Name of the new playlist"
+        placeholder="playlist name"
         value={inputValue}
       />
-      <Button name="add" func={() => handleClick(inputValue)} extra={"p-2"} />
+      <Button name="+" func={() => handleClick(inputValue)} extra={"text-xs"} />
     </div>
   );
 }
-
