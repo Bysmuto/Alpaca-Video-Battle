@@ -26,18 +26,18 @@ export default function AddVideo() {
   return (
     <div className="w-[100%] flex items-center justify-center ">
       <input
-        className="text-main text-xs p-6 w-[100%] rounded-sm"
+        className="text-main text-[0.8rem] p-1 md:p-2 w-[100%] "
         type="text"
         onChange={(event) => {
           setInputValue(event.target.value);
         }}
-        placeholder="Add youtube link"
+        placeholder="youtube link"
         value={inputValue}
       />
       <Button
         name="+"
         func={() => handleClick(states.databasePlayListId, inputValue)}
-        extra={"p-2"}
+        extra={"text-[0.8rem] px-[0.5rem] py-[0.3rem]  md:px-4 md:py-2"}
       />
     </div>
   );

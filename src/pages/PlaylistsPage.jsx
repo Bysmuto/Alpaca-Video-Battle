@@ -43,9 +43,9 @@ export default function PlaylistsPage() {
       ) : (
         <div className="flex flex-col items-center justify-center h-[100vh]">
           <h1 className="text-sm md:text-xl">Select a playlist</h1>
-          <div className="flex flex-col m-4 p-6 space-y-5 items-center w-[80vw] h-[60vh]  border-4 border-main md:w-[50vw]">
-            <div className=" p-4 w-full flex flex-col items-center space-y-6 ">
-              {playlists.map((playlist) => (
+          <div className="flex flex-col m-4 p-6 space-y-5 items-center w-[80vw] h-[60vh]    border-4 border-main md:w-[50vw]">
+            <div className=" p-8 w-full flex flex-col items-center overflow-auto space-y-6 ">
+              {playlists.reverse().map((playlist) => (
                 <Button
                   key={playlist[0]}
                   name={playlist[1].name}

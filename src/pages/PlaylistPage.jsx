@@ -11,15 +11,21 @@ export default function PlaylistPage() {
 
   return (
     <>
-      <div className="flex flex-col items-center space-y-6">
+      <div className="flex flex-col items-center space-y-2">
         <div className="w-full flex justify-between items-center p-3  ">
           <Button name={"<"} func={() => changePage("PlaylistsPage")} extra={"text-xs"} />
         </div>
 
         <div className="flex flex-col  items-center w-[80vw] space-y-6">
-          <PlaylistInfo />
+          
+          <div className=" md:w-[40vw] flex justify-center flex-col gap-6">
+          <h1 className="text-sm text-center md:text-xl">add a video</h1>
+          <div>
+            <AddVideo />
+          </div>
 
-          <Button name="play" func={() => changePage("GameModesPage")} />
+          </div>
+        
 
           <div className="h-[55vh] w-[80vw] md:w-[40vw] border-4 border-main p-4 overflow-auto">
             {states.databasePlayList ? (
@@ -29,12 +35,25 @@ export default function PlaylistPage() {
                   <VideoPlaylist key={index} video={video} videoKey={key} />
                 ))
             ) : (
-              <p>No videos available.</p>
+              <div className="w-full h-full flex justify-center items-center">
+                <p >no videos </p>
+              </div>
             )}
           </div>
-          <div className="">
-            <AddVideo />
-          </div>
+
+          {states.databasePlayList &&
+          <>
+               <PlaylistInfo />
+          <Button
+            name="play"
+            func={() => changePage("GameModesPage")}
+            extra={"w-[80vw] md:w-[40vw] "}
+          />
+          
+          </>
+          
+          }
+     
         </div>
       </div>
     </>

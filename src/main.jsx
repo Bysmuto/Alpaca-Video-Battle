@@ -14,6 +14,8 @@ import PlaylistsPage from "./pages/PlaylistsPage.jsx";
 import PlaylistPage from "./pages/PlaylistPage.jsx";
 import WinnerPage from "./pages/WinnerPage.jsx";
 
+import UploadPlayList from "./utils/uploadPlaylists.jsx";
+
 const list = [
   {
     title: "The Way of the Samurai",
@@ -310,13 +312,14 @@ function App() {
   const [states, setStates] = useState({
     currentPage: "start",
 
+    databasePlayListId: "",
     databasePlayList: list,
     databasePlayListName: "",
-    databasePlayListId: "",
+   
 
     gameMode: "",
     timeLimit: 90,
-    playlistMaxNumber: 20,
+    playlistMaxNumber: 32,
 
     randomEvents: 0,
 
@@ -343,6 +346,7 @@ function App() {
         {states.currentPage === "GameOneVsAll" && <GameOneVsAll />}
         {states.currentPage === "GameFreeForAll" && <GameFreeForAll />}
         {states.currentPage === "WinnerPage" && <WinnerPage />}
+        {states.currentPage === "UploadPlayList" && <UploadPlayList />}
       </>
     </statesContext.Provider>
   );

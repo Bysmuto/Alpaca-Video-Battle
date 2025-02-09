@@ -17,7 +17,7 @@ export default function VideoPlaylist({ video, videoKey }) {
   }
 
   return (
-    <div className="flex justify-between m-3">
+    <div className="flex justify-between items-center m-3 ">
       
       <WrappedText
         key={videoKey}
@@ -26,6 +26,7 @@ export default function VideoPlaylist({ video, videoKey }) {
             href={"https://www.youtube.com/watch?v=" + video.videoId}
             target="_blank"
             rel="noopener noreferrer"
+            className="text-[0.6rem]  md:text-base"
           >
             {video.title}
           </a>
@@ -35,7 +36,7 @@ export default function VideoPlaylist({ video, videoKey }) {
       <Button
         name="X"
         func={() => removeVideo(videoKey)}
-        extra={" text-xs px-1 py-0 p-4 md:px-8 md:py-4"}
+        extra={" text-[0.6rem] px-[0.5rem] py-[0.3rem]  md:px-8 md:py-4"}
       />
     </div>
   );
