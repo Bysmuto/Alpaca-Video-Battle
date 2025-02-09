@@ -143,7 +143,7 @@ export function preparePlaylist(playlist) {
   const shuffled = shuffleArray(playlist);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
 
-  if (states.gameMode === "GameTournament") {
+  if (states.gameMode === "GamePedro"||"GameTournament") {
     const paired = separateIntoPairs(sliced);
     return paired;
   }

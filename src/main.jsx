@@ -14,6 +14,8 @@ import PlaylistsPage from "./pages/PlaylistsPage.jsx";
 import PlaylistPage from "./pages/PlaylistPage.jsx";
 import WinnerPage from "./pages/WinnerPage.jsx";
 
+import GamePedro from "./Modes/GamePedro.jsx";
+
 import UploadPlayList from "./utils/uploadPlaylists.jsx";
 
 const list = [
@@ -347,6 +349,9 @@ function App() {
         {states.currentPage === "GameFreeForAll" && <GameFreeForAll />}
         {states.currentPage === "WinnerPage" && <WinnerPage />}
         {states.currentPage === "UploadPlayList" && <UploadPlayList />}
+        
+        {states.currentPage === "GamePedro" && <GamePedro />}
+
       </>
     </statesContext.Provider>
   );
