@@ -13,7 +13,7 @@ export async function getVideoTitle(videoId) {
 
 export function getVideoId(url) {
   const regex =
-    /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:.*[?&]v=|embed\/|v\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:.*[?&]v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
   const videoId = url.match(regex)[1];
   return videoId;
 }
@@ -143,7 +143,7 @@ export function preparePlaylist(playlist) {
   const shuffled = shuffleArray(playlist);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
 
-  if (states.gameMode === "GamePedro"||"GameTournament") {
+  if (states.gameMode === "GameTournament" || states.gameMode === "GamePedro") {
     const paired = separateIntoPairs(sliced);
     return paired;
   }

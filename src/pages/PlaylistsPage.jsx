@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { statesContext } from "../main";
 import { fetchPlaylists } from "../utils/database";
 import { changeState } from "../utils/utilityFuncs";
-import WindowFrame from "../Components/WindowFrame";
 import AddPlaylist from "../Components/AddPlaylist";
 import Button from "../Components/Button";
 
@@ -51,13 +50,14 @@ export default function PlaylistsPage() {
                   name={playlist[1].name}
                   func={() => selectPlaylist(playlist[1].videos, playlist[1].name, playlist[0])}
                   extra={"w-full text-sm md:text-xl"}
+  
                 />
               ))}
             </div>
            
           </div>
          
-          <h1 className="text-sm md:text-xl">Create a new playlist</h1>
+          <h1 className="text-xs md:text-xl mt-6">Create a new playlist</h1>
           <div className="w-[80vw] m-4 md:w-[50vw]">
           <AddPlaylist />
           </div>

@@ -312,7 +312,7 @@ const list = [
 export const statesContext = createContext();
 function App() {
   const [states, setStates] = useState({
-    currentPage: "start",
+    currentPage: "GameModesPage",
 
     databasePlayListId: "",
     databasePlayList: list,

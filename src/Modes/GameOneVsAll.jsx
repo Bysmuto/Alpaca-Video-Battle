@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useRef } from "react";
-import { getRandomIndex, preparePlaylist } from "../utils/utilityFuncs.js";
+import {  preparePlaylist } from "../utils/utilityFuncs.js";
 import { statesContext } from "../main.jsx";
 import Round from "../Components/Round.jsx";
 import Timer from "../Components/Timer.jsx";
