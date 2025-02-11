@@ -153,6 +153,7 @@ export default function GameFreeForAll({}) {
         {eventWarings()}
 
         <div className="grid grid-cols-2 gap-4 m-4 mt-16 ">
+
           {hideVideo1 ? (
             <AlpacaCard vote={() => vote(index2)} />
           ) : (

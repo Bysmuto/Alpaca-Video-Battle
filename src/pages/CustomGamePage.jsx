@@ -20,25 +20,17 @@ export default function CustomGamePage({}) {
       <Button name={"<"} func={() => changePage("GameModesPage")} extra={"text-xs m-5"} />
       <div className="h-[80vh] m-5 flex items-center justify-center">
         <div className="flex flex-col justify-center items-center  gap-4">
+          <h1 className="text-center md:text-xl ">videos limit:</h1>
+          <AddGameVariable variable={"playlistMaxNumber"} placeholder={"0"} />
 
-        
-            <h1 className="text-center md:text-xl ">videos limit:</h1>
-            <AddGameVariable variable={"playlistMaxNumber"} placeholder={"0"} />
-       
+          <h1 className="text-center md:text-xl  ">time limit:</h1>
+          <AddGameVariable variable={"timeLimit"} placeholder={"ex: 90 = 1:30m"} />
 
-      
-            <h1 className="text-center md:text-xl  ">time limit:</h1>
-            <AddGameVariable variable={"timeLimit"} placeholder={"ex: 90 = 1:30m"} />
-          
-
-      
-            <h1 className="text-center md:text-xl  "> events % :</h1>
-            <AddGameVariable variable={"randomEvents"} placeholder={"ex: 50 = 50%"} />
-        
+          <h1 className="text-center md:text-xl  "> events % :</h1>
+          <AddGameVariable variable={"randomEvents"} placeholder={"ex: 50 = 50%"} />
 
           <h1 className="text-center  m-5 md:text-2xl">select mode:</h1>
           <div className="grid  gap-3 md:grid-cols-3 ">
-
             <Button
               name="free for all"
               func={() => selectMode("GameFreeForAll")}
