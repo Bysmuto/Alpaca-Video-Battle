@@ -12,7 +12,7 @@ export default function StartPage() {
     <>
       <div className="flex items-center justify-center h-[100vh]">
         <div className="flex flex-col items-center w-[80vw]">
-          <img className="w-[60vw]" src={logo} alt="logo" /> <br />
+          <img className="w-[60vw] md:w-[20vw]" src={logo} alt="logo" /> <br />
           <Button name="start" func={() => changePage("PlaylistsPage")} />
       
         </div>
