@@ -140,7 +140,9 @@ function trimToPowerOfTwo(arr) {
 export function preparePlaylist(playlist) {
   const [states] = useContext(statesContext);
 
-  const shuffled = shuffleArray(playlist);
+  const uniqueList = Array.from(new Map(playlist.map(item => [item.videoId, item])).values());
+
+  const shuffled = shuffleArray(uniqueList);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
 
   if (states.gameMode === "GameTournament" || states.gameMode === "GamePedro") {
