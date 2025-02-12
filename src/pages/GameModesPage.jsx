@@ -65,12 +65,12 @@ export default function GameModesPage({}) {
             <h1 className="text-center  w-full md:text-xl">select the game mode</h1>
 
             <Button name="normal" func={() => selectMode("normal")} />
-            <Button
+            {/* <Button
               name="Pedro's birthday"
               func={() => selectMode("Pedro")}
               extra="font-bold border-yellow-900 font-bold 
               bg-gradient-to-r from-red-500 via-yellow-500 via-green-500 via-blue-500 via-purple-500 to-pink-500 bg-[length:200%_200%] animate-gradient"
-            />
+            /> */}
 
             <Button
               name="quick"
