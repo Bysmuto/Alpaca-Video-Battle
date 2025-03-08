@@ -6,7 +6,6 @@ import Timer from "../Components/Timer.jsx";
 import { TournamentCard } from "../Components/VideoCard.jsx";
 import Button from "../Components/Button.jsx";
 
-
 import impact from "../../public/sounds/impact.mp3";
 
 export default function GameTournament({}) {
@@ -15,18 +14,17 @@ export default function GameTournament({}) {
     preparePlaylist(Object.values(states.databasePlayList))
   );
   const [roundWinners, setRoundWinners] = useState([]);
-  const [seconds, setSeconds] = useState(states.timeLimit);
 
-    //sound
-    const audioRef = useRef(new Audio(impact));
-    function playSound() {
-      audioRef.current.volume = 0.45;
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
-    }
-    useEffect(() => {
-       playSound()
-    }, []);
+  //sound
+  const audioRef = useRef(new Audio(impact));
+  function playSound() {
+    audioRef.current.volume = 0.45;
+    audioRef.current.currentTime = 0;
+    audioRef.current.play();
+  }
+  useEffect(() => {
+    playSound();
+  }, []);
 
   useEffect(() => {
     if (currentPlaylist.length === 0 && roundWinners.length > 1) {
@@ -43,10 +41,6 @@ export default function GameTournament({}) {
   }, [currentPlaylist]);
 
   function vote(videoIndex) {
-  
-
-
-
     const roundWinner = currentPlaylist[0][videoIndex];
     setRoundWinners((prevNextRound) => [...prevNextRound, roundWinner]);
 
@@ -54,28 +48,16 @@ export default function GameTournament({}) {
       return [...prevNextRound].slice(1);
     });
 
-     (currentPlaylist.length === 1 && roundWinners.length === 0)?'':playSound()
-
+    currentPlaylist.length === 1 && roundWinners.length === 0 ? "" : playSound();
   }
 
   if (currentPlaylist.length >= 1) {
     return (
       <div className="flex flex-col items-center justify-center  ">
         <div className="w-full flex justify-between items-center p-3 ">
-          <Button
-            name={"<"}
-            func={() => changePage("GameModesPage")}
-            extra={"text-xs"}
-          />
-          <Round
-            stateChange={currentPlaylist}
-            maxRound={currentPlaylist.length}
-          />
-          <Timer
-            seconds={seconds}
-            state={currentPlaylist}
-            funcToVote={() => vote(0)}
-          />
+          <Button name={"<"} func={() => changePage("GameModesPage")} extra={"text-xs"} />
+          <Round stateChange={currentPlaylist} maxRound={currentPlaylist.length} />
+          <Timer seconds={states.timeLimit} state={currentPlaylist} funcToVote={() => vote(0)} />
         </div>
 
         <div className="m-4 w-full flex justify-center"></div>
@@ -83,14 +65,12 @@ export default function GameTournament({}) {
           <TournamentCard
             key={currentPlaylist[0][0]?.videoId}
             videoId={currentPlaylist[0][0]?.videoId}
-  
             vote={() => vote(0)}
           />
 
           <TournamentCard
             key={currentPlaylist[0][1]?.videoId}
             videoId={currentPlaylist[0][1]?.videoId}
-   
             vote={() => vote(1)}
             isRight={true}
           />

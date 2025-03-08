@@ -10,13 +10,10 @@ import GameTournament from "./Modes/GameTournament.jsx";
 import GameModesPage from "./pages/GameModesPage.jsx";
 import CustomGamePage from "./pages/CustomGamePage.jsx";
 import StartPage from "./pages/StartPage.jsx";
-import PlaylistsPage from "./pages/PlaylistsPage.jsx";
+import SelectPlaylistPage from "./pages/SelectPlaylistPage.jsx";
 import PlaylistPage from "./pages/PlaylistPage.jsx";
 import WinnerPage from "./pages/WinnerPage.jsx";
-
-import GamePedro from "./Modes/GamePedro.jsx";
-
-import UploadPlayList from "./utils/uploadPlaylists.jsx";
+import CreatePlaylistPage from "./pages/CreatePlaylistPage.jsx";
 
 const list = [
   {
@@ -309,6 +306,18 @@ const list = [
   }
 ];
 
+export const categories = [
+  "all",
+  "k-pop",
+  "anime",
+  "gaming",
+  "pop",
+  "tv shows",
+  "other",
+  "rock",
+  "rap"
+];
+
 export const statesContext = createContext();
 function App() {
   const [states, setStates] = useState({
@@ -317,13 +326,10 @@ function App() {
     databasePlayListId: "",
     databasePlayList: list,
     databasePlayListName: "",
-   
 
     gameMode: "",
     timeLimit: 90,
     playlistMaxNumber: 32,
-
-    randomEvents: 0,
 
     winner: {}
   });
@@ -340,7 +346,8 @@ function App() {
     <statesContext.Provider value={[states, setStates, changePage]}>
       <>
         {states.currentPage === "start" && <StartPage />}
-        {states.currentPage === "PlaylistsPage" && <PlaylistsPage />}
+        {states.currentPage === "SelectPlaylistPage" && <SelectPlaylistPage />}
+        {states.currentPage === "CreatePlaylistPage" && <CreatePlaylistPage />}
         {states.currentPage === "PlaylistPage" && <PlaylistPage />}
         {states.currentPage === "GameModesPage" && <GameModesPage />}
         {states.currentPage === "CustomGamePage" && <CustomGamePage />}
@@ -348,10 +355,6 @@ function App() {
         {states.currentPage === "GameOneVsAll" && <GameOneVsAll />}
         {states.currentPage === "GameFreeForAll" && <GameFreeForAll />}
         {states.currentPage === "WinnerPage" && <WinnerPage />}
-        {states.currentPage === "UploadPlayList" && <UploadPlayList />}
-        
-        {states.currentPage === "GamePedro" && <GamePedro />}
-
       </>
     </statesContext.Provider>
   );

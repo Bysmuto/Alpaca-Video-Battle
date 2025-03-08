@@ -11,12 +11,45 @@ export async function getVideoTitle(videoId) {
   return data.items[0].snippet.title;
 }
 
+export async function getVideoIds(playlistId) {
+  const ytk = "AIzaSyAcM3fuIbRmXAPVUAsbi7wpywukclOu2a0";
+  let videoIds = [];
+  let nextPageToken = "";
+  let url = `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${playlistId}&maxResults=50&key=${ytk}`;
+
+  do {
+    const res = await fetch(nextPageToken ? url + `&pageToken=${nextPageToken}` : url);
+    const data = await res.json();
+
+    videoIds.push(...data.items.map(item => item.contentDetails.videoId));
+    nextPageToken = data.nextPageToken;
+  } while (nextPageToken);
+  console.log(videoIds);
+  return videoIds;
+
+}
+
+
 export function getVideoId(url) {
-  const regex =
-  /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:.*[?&]v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+  const regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:.*[?&]v=|embed\/|v\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
   const videoId = url.match(regex)[1];
   return videoId;
 }
+
+export function getPlaylistId(url) {
+  const regex = /[?&]list=([a-zA-Z0-9_-]+)/;
+  const playlistId = url.match(regex);
+  if(playlistId){
+    return playlistId[1] 
+  }
+ 
+}
+
+
+
+
+
+
 
 export function getRandomIndex(excludeIndex = -1, list) {
   let randomIndex;
@@ -145,7 +178,7 @@ export function preparePlaylist(playlist) {
   const shuffled = shuffleArray(uniqueList);
   const sliced = shuffled.slice(0, states.playlistMaxNumber);
 
-  if (states.gameMode === "GameTournament" || states.gameMode === "GamePedro") {
+  if (states.gameMode === "GameTournament") {
     const paired = separateIntoPairs(sliced);
     return paired;
   }

@@ -1,9 +1,9 @@
 import React from "react";
 
-function Frame({ children }) {
+function Frame({ children,width }) {
 
 
-  return <div className="flex flex-col items-center justify-center  m-4 p-4  w-[80%] md:w-[50vw] h-[60vh]  border-4 border-main">
+  return <div className= {`p-4 m-4 border-4 border-main ${width || ''}`}>
     {children}
     </div>;
 }

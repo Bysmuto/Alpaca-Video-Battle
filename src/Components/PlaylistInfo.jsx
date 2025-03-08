@@ -6,12 +6,14 @@ export default function PlaylistInfo() {
   const [states] = useContext(statesContext);
 
   return (
-    <div className="">
-      {states.databasePlayListName} -{" "}
-      {states.databasePlayList
+    <div className="grid gap-4">
+      {/* <h1 className='text-center md:text-right'> {states.databasePlayListName} </h1>  */}
+      <h2 className='text-center'>   {states.databasePlayList
         ? Object.values(states.databasePlayList).length
-        : 0}{" "}
-      videos
+        : 0}{' '}
+       videos</h2>
+     
+    
     </div>
   );
 }
